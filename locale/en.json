@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Config Sync",
+    "description": "Export this computer's DSH configuration and import it on another computer, including installed plugins and their settings."
+  }
+}
