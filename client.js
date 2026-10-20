@@ -36,6 +36,7 @@ window.__ModuleLoader__.load({
       settingsToApply: 'Apply settings',
       skillsToImport: 'Import skills',
       pendingConfigs: 'Wait for restart',
+      planPendingHint: 'Some settings need a restart before they can be applied: {count}',
       manualActions: 'Manual steps',
       conflictsTitle: 'Conflicts',
       warningsTitle: 'Warnings',
@@ -107,6 +108,7 @@ window.__ModuleLoader__.load({
       settingsToApply: '应用设置',
       skillsToImport: '导入技能',
       pendingConfigs: '等待重启',
+      planPendingHint: '部分设置需要等重启后才能应用：{count} 项',
       manualActions: '手动步骤',
       conflictsTitle: '冲突',
       warningsTitle: '警告',
@@ -221,9 +223,7 @@ window.__ModuleLoader__.load({
       anchor.href = url
       anchor.download = filename
       anchor.rel = 'noopener'
-      document.body.appendChild(anchor)
       anchor.click()
-      anchor.remove()
       setTimeout(() => URL.revokeObjectURL(url), 4000)
     }
 
@@ -300,6 +300,8 @@ window.__ModuleLoader__.load({
     function PlanView(props) {
       const { plan, t } = props
       const summary = plan.summary || {}
+      const pendingTotal =
+        (summary.pendingConfigs || 0) + (summary.pendingSettings || 0) + (summary.pendingRows || 0)
       return h(
         'div',
         { className: 'dshsync-card' },
@@ -319,8 +321,12 @@ window.__ModuleLoader__.load({
             { label: t('configsToApply'), value: summary.configs || 0 },
             { label: t('settingsToApply'), value: summary.settings || 0 },
             { label: t('skillsToImport'), value: summary.skills || 0 },
+            { label: t('pendingConfigs'), value: pendingTotal },
           ],
         }),
+        pendingTotal > 0
+          ? h('p', { className: 'dshsync-note' }, t('planPendingHint', { count: pendingTotal }))
+          : null,
         plan.source && (plan.source.profile || plan.source.platform)
           ? h(
               'div',
