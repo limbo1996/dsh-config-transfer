@@ -67,7 +67,7 @@ async function readJson(request) {
   if (Number.isFinite(declared) && declared > MAX_IMPORT_BYTES) {
     throw new InputError(`Import file exceeds ${Math.floor(MAX_IMPORT_BYTES / (1024 * 1024))} MiB`, 'too-large')
   }
-  const text = await request.text()
+  const text = (await request.text()).replace(/^\uFEFF/u, '')
   if (Buffer.byteLength(text, 'utf8') > MAX_IMPORT_BYTES) {
     throw new InputError(`Import file exceeds ${Math.floor(MAX_IMPORT_BYTES / (1024 * 1024))} MiB`, 'too-large')
   }
@@ -90,6 +90,7 @@ export function apply(ctx) {
   let running = false
   let retrying = false
   let retryTimer
+  let startupRetryAttempts = 0
 
   let state = {
     phase: 'idle',
@@ -113,12 +114,12 @@ export function apply(ctx) {
     return state.pending
   }
 
-  const scheduleRetry = (delayMs, resetAttempts = false) => {
+  const scheduleRetry = (delayMs, resetAttempts = false, startup = false) => {
     if (retryTimer !== undefined) clearTimeout(retryTimer)
     retryTimer = setTimeout(() => {
       retryTimer = undefined
       if (running || retrying) {
-        scheduleRetry(2000, resetAttempts)
+        scheduleRetry(2000, resetAttempts, startup)
         return
       }
       retrying = true
@@ -126,6 +127,10 @@ export function apply(ctx) {
         try {
           const result = await retryPending(ctx, homes, { resetAttempts })
           update({ pending: result.pending === undefined ? emptyCounts() : pendingCounts(result.pending) })
+          if (startup && result.pending !== undefined && startupRetryAttempts < 3) {
+            startupRetryAttempts += 1
+            scheduleRetry(8000, false, true)
+          }
         } catch (error) {
           ctx.logger?.warn?.(`dsh-config-sync: pending retry failed: ${error?.message ?? error}`)
         } finally {
@@ -137,7 +142,7 @@ export function apply(ctx) {
   }
 
   void refreshPending()
-  scheduleRetry(2500, true)
+  scheduleRetry(2500, true, true)
 
   ctx.effect(
     () => {

@@ -625,7 +625,7 @@ window.__ModuleLoader__.load({
         setPlan(null)
         setReport(null)
         try {
-          const text = await chosen.text()
+          const text = (await chosen.text()).replace(/^\uFEFF/u, '')
           try {
             JSON.parse(text)
           } catch {
