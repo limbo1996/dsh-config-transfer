@@ -296,3 +296,118 @@ test('the sync plugin itself is never installed, toggled, or edited', async () =
     await rm(root, { recursive: true, force: true })
   }
 })
+
+test('disabled optional on-demand bundles are not installed', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'dshsync-plan-'))
+  const profileDir = join(root, 'profile')
+  await mkdir(profileDir, { recursive: true })
+  await writeFile(join(profileDir, 'cordis.patch.yml'), '[]\n')
+  const payload = makePayload()
+  payload.profile.plugins = []
+  payload.profile.inserts = []
+  payload.profile.configs = []
+  payload.profile.settings = []
+  payload.skills = { skills: [] }
+  payload.workspaces = []
+  payload.profile.bundles = [
+    {
+      name: '@deepseek-ai/dsh-subagent-claude-code',
+      version: null,
+      official: true,
+      availability: 'missing',
+      enabled: false,
+      installed: false,
+      installTarget: {
+        spec: '@deepseek-ai/dsh-subagent-claude-code@0.2.1-rc.2',
+        version: '0.2.1-rc.2',
+      },
+    },
+    {
+      name: '@deepseek-ai/dsh-subagent-codex',
+      version: null,
+      official: true,
+      availability: 'missing',
+      enabled: false,
+      installed: false,
+      installTarget: {
+        spec: '@deepseek-ai/dsh-subagent-codex@0.2.1-rc.2',
+        version: '0.2.1-rc.2',
+      },
+    },
+  ]
+  try {
+    const built = await buildPlan(makeCtx(profileDir), {
+      dshHome: join(root, 'dsh'),
+      agentsHome: join(root, 'agents'),
+    }, payload)
+    assert.equal(built.display.summary.bundlesToInstall, 0)
+    assert.equal(built.display.summary.manual, 0)
+    assert.equal(built.display.warnings.some((warning) => warning.includes('not present')), false)
+
+    payload.profile.bundles[0].enabled = true
+    const enabled = await buildPlan(makeCtx(profileDir), {
+      dshHome: join(root, 'dsh'),
+      agentsHome: join(root, 'agents'),
+    }, payload)
+    assert.equal(enabled.display.summary.bundlesToInstall, 1)
+    assert.equal(enabled.display.installs[0].name, '@deepseek-ai/dsh-subagent-claude-code')
+    assert.equal(enabled.display.warnings.some((warning) => warning.includes('not present')), false)
+  } finally {
+    await rm(root, { recursive: true, force: true })
+  }
+})
+
+test('local items already present on this machine are not manual steps', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'dshsync-plan-'))
+  const profileDir = join(root, 'profile')
+  await mkdir(profileDir, { recursive: true })
+  await writeFile(
+    join(profileDir, 'cordis.patch.yml'),
+    '- insert:\n    - id: local-insert\n      name: ./local.mjs\n      config: {}\n',
+  )
+  const base = makeCtx(profileDir)
+  const ctx = {
+    get(name) {
+      if (name !== 'pluginManager') return base.get(name)
+      return {
+        async listBundles() {
+          return [
+            {
+              name: 'local-dep',
+              version: '1.0.0',
+              official: false,
+              availability: 'profile',
+              enabled: true,
+              installed: true,
+              installTarget: { spec: 'link:/tmp/local-dep', version: '1.0.0' },
+              rows: [],
+            },
+          ]
+        },
+        async listPlugins() {
+          return []
+        },
+      }
+    },
+  }
+  const payload = makePayload()
+  payload.profile.bundles = []
+  payload.profile.plugins = []
+  payload.profile.configs = []
+  payload.profile.settings = []
+  payload.profile.dependencies = { 'local-dep': 'link:/tmp/local-dep' }
+  payload.profile.inserts = [
+    { id: 'local-insert', name: './local.mjs', config: {}, portable: false },
+  ]
+  payload.skills = { skills: [] }
+  payload.workspaces = []
+  try {
+    const built = await buildPlan(ctx, { dshHome: join(root, 'dsh'), agentsHome: join(root, 'agents') }, payload)
+    assert.equal(built.display.summary.bundlesToInstall, 0)
+    assert.equal(built.display.summary.inserts, 0)
+    assert.equal(built.display.summary.manual, 0)
+    assert.equal(built.display.conflicts.length, 0)
+  } finally {
+    await rm(root, { recursive: true, force: true })
+  }
+})

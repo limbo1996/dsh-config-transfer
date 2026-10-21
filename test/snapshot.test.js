@@ -29,6 +29,32 @@ function makeCtx(profileDir) {
                 rows: [{ rowId: 'cost-meter', moduleName: 'dsh-cost-meter' }],
                 error: null,
               },
+              {
+                name: '@deepseek-ai/dsh-experimental-voice-input-bundle',
+                version: '0.2.1-rc.2',
+                official: true,
+                availability: 'installation',
+                enabled: false,
+                installed: false,
+                optional: true,
+                removable: false,
+                rows: [],
+                error: null,
+              },
+              {
+                name: 'dsh-disabled-installed',
+                version: '1.0.0',
+                official: false,
+                availability: 'profile',
+                enabled: false,
+                installed: true,
+                optional: false,
+                removable: true,
+                source: 'dsh-disabled-installed@1.0.0',
+                installTarget: { spec: 'dsh-disabled-installed', version: '1.0.0' },
+                rows: [],
+                error: null,
+              },
             ]
           },
           async listPlugins() {
@@ -132,7 +158,11 @@ test('collectSnapshot exports config, insert rows, settings, bundles, and skills
     assert.equal(result.snapshot.profile.inserts[0].id, 'mcp-zotero')
     assert.equal(result.snapshot.profile.inserts[0].config.command, 'zotero-mcp')
     assert.equal(result.snapshot.profile.settings.length, 1)
-    assert.equal(result.snapshot.profile.bundles.length, 1)
+    assert.equal(result.snapshot.profile.bundles.length, 2)
+    assert.deepEqual(
+      result.snapshot.profile.bundles.map((bundle) => bundle.name).sort(),
+      ['dsh-cost-meter', 'dsh-disabled-installed'],
+    )
     assert.equal(result.snapshot.skills.skills.length, 1)
     assert.equal(result.snapshot.workspaces[0].title, 'project')
     assert.equal(result.stats.redactions, 1)
