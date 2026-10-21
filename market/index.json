@@ -10,7 +10,7 @@
   },
   "plugins": [
     {
-      "name": "@limbo1996/dshsync",
+      "name": "dsh-config-transfer",
       "title": {
         "en": "Config Sync",
         "zh": "配置同步"
@@ -19,11 +19,11 @@
         "en": "Export and import a DSH Desktop configuration, including installed plugins, plugin settings, MCP entries, and user skills.",
         "zh": "导出/导入 DSH Desktop 配置，包含已安装插件、插件设置、MCP 条目和用户技能。"
       },
-      "icon": "https://raw.githubusercontent.com/limbo1996/dshsync/main/icon.svg",
+      "icon": "https://raw.githubusercontent.com/limbo1996/dsh-config-transfer/main/icon.svg",
       "author": "limbo1996",
-      "homepage": "https://github.com/limbo1996/dshsync",
+      "homepage": "https://github.com/limbo1996/dsh-config-transfer",
       "repository": {
-        "url": "https://github.com/limbo1996/dshsync"
+        "url": "https://github.com/limbo1996/dsh-config-transfer"
       },
       "metadata": {
         "keywords": [

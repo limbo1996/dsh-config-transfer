@@ -1,5 +1,5 @@
 window.__ModuleLoader__.load({
-  id: '@limbo1996/dshsync',
+  id: 'dsh-config-transfer',
   factory(require) {
     const React = require('react')
     const h = React.createElement

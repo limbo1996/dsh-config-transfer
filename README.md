@@ -4,11 +4,11 @@
 
 DSH Desktop 的登录只同步账号，不会同步本机配置。**dshsync** 在旧电脑上导出配置，在新电脑上导入，从而恢复插件、插件设置、MCP 条目和用户技能。
 
-> npm 包名：`@limbo1996/dshsync`（GitHub 仓库仍叫 `dshsync`）。
+> npm 包名：`dsh-config-transfer`，与 GitHub 仓库同名。
 >
 > 本插件与 npm 上的 `dsh-config-sync` 不是同一个包，也没有隶属关系。dshsync 默认**不导出凭据与 API 密钥**；导入时会保留新电脑上已有的凭据。
 >
-> npm 不允许发布无 scope 的 `dshsync`（与已有包 `dsh-sync` 太相似），所以使用 `@limbo1996/dshsync`。
+> npm 不允许发布无 scope 的 `dshsync`（与已有包 `dsh-sync` 太相似），所以使用 `dsh-config-transfer`。
 
 ## 功能
 
@@ -34,27 +34,27 @@ DSH Desktop 的登录只同步账号，不会同步本机配置。**dshsync** �
 ### 从 npm 安装（推荐）
 
 ```bash
-dsh plugin --profile desktop add @limbo1996/dshsync
+dsh plugin --profile desktop add dsh-config-transfer
 # Web profile:
-dsh plugin --profile web add @limbo1996/dshsync
+dsh plugin --profile web add dsh-config-transfer
 ```
 
 然后在 DSH 中重启或刷新页面。
 
 ### 在 Desktop 中安装
 
-打开 **Plugins → Add plugin**，输入包名 `@limbo1996/dshsync`，或选择本目录 / 本地 tarball。
+打开 **Plugins → Add plugin**，输入包名 `dsh-config-transfer`，或选择本目录 / 本地 tarball。
 
 ### 从本地目录安装（开发）
 
 ```bash
-dsh plugin --profile desktop add /path/to/dshsync
+dsh plugin --profile desktop add /path/to/dsh-config-transfer
 ```
 
 ### 从 tarball 安装
 
 ```bash
-dsh plugin --profile desktop add ./limbo1996-dshsync-1.0.0.tgz
+dsh plugin --profile desktop add ./dsh-config-transfer-1.0.0.tgz
 ```
 
 安装后可在 **设置 → 配置同步** 找到本插件。
@@ -143,11 +143,11 @@ dshsync 会：
 
 ## 插件市场与索引
 
-- **第三方市场**：公开 GitHub 仓库 `dshsync`，加 `dsh-plugin` topic；市场能搜到仓库，但 npm 包名是 `@limbo1996/dshsync`，一键安装会按仓库名尝试 `dshsync` 并失败，请在安装表单手动输入 `@limbo1996/dshsync`。
+- **第三方市场**：公开 GitHub 仓库 `dsh-config-transfer`，加 `dsh-plugin` topic；仓库名与 npm 包名一致，市场可以直接一键安装。
 - **官方 Discover / 社区索引**：添加索引源
-  `https://limbo1996.github.io/dshsync/index.json`
+  `https://limbo1996.github.io/dsh-config-transfer/index.json`
   （部署 `market/` 目录后可用）。
-- **社区目录**：DSH Plugin Hub、Open Plugin Market、realoiyo 索引等；详见 [PUBLISHING.md](https://github.com/limbo1996/dshsync/blob/main/PUBLISHING.md)。
+- **社区目录**：DSH Plugin Hub、Open Plugin Market、realoiyo 索引等；详见 [PUBLISHING.md](https://github.com/limbo1996/dsh-config-transfer/blob/main/PUBLISHING.md)。
 
 官方 DSH 0.2.x **没有默认市场索引**；Discover 需要用户添加索引源 URL。
 
@@ -185,7 +185,7 @@ dshsync 会：
 - **插件安装失败**：检查网络、npm registry 和 pnpm；查看导入报告中的安装诊断。
 - **本地插件未恢复**：`link:` / 本地路径插件不会被复制。请在新电脑上重新安装该插件，然后重新导入配置。
 - **导入后页面消失**：如果旧配置停用了 Settings 插件，导入会忠实恢复该状态。可在 Plugins 页面重新启用。
-- **旧导出文件里有 `dshsync` 或 `dsh-config-sync`**：dshsync 会把它们识别为同步插件自身并跳过，不会安装 npm 上另一个同名包。
+- **旧导出文件里有 `dshsync`、`@limbo1996/dshsync` 或 `dsh-config-sync`**：dshsync 会把它们识别为同步插件自身并跳过，不会安装 npm 上另一个同名包。
 
 ## 开发
 
@@ -199,7 +199,7 @@ npm pack --dry-run
 
 ## 发布
 
-见 [PUBLISHING.md](https://github.com/limbo1996/dshsync/blob/main/PUBLISHING.md)。
+见 [PUBLISHING.md](https://github.com/limbo1996/dsh-config-transfer/blob/main/PUBLISHING.md)。
 
 ## 许可证
 

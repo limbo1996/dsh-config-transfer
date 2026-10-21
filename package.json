@@ -1,5 +1,5 @@
 {
-  "name": "@limbo1996/dshsync",
+  "name": "dsh-config-transfer",
   "version": "1.0.0",
   "description": "Export and import a DeepSeek Harness Desktop configuration, including installed plugins, plugin settings, MCP entries, and user skills. Credentials and API keys are not exported.",
   "type": "module",
@@ -38,11 +38,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/limbo1996/dshsync.git"
+    "url": "git+https://github.com/limbo1996/dsh-config-transfer.git"
   },
-  "homepage": "https://github.com/limbo1996/dshsync#readme",
+  "homepage": "https://github.com/limbo1996/dsh-config-transfer#readme",
   "bugs": {
-    "url": "https://github.com/limbo1996/dshsync/issues"
+    "url": "https://github.com/limbo1996/dsh-config-transfer/issues"
   },
   "engines": {
     "node": ">=20.18",
