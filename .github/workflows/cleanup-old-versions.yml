@@ -1,0 +1,26 @@
+name: cleanup-old-versions
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+      - name: Unpublish superseded versions
+        run: |
+          set +e
+          for v in 1.0.0 1.0.1 0.0.0-stage; do
+            echo "unpublishing $v"
+            npm unpublish "dsh-config-transfer@$v" --force
+            echo "exit=$?"
+          done
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
