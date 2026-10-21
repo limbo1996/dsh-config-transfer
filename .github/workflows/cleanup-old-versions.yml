@@ -7,20 +7,18 @@ permissions:
   contents: read
 
 jobs:
-  cleanup:
+  deprecate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           registry-url: https://registry.npmjs.org
-      - name: Unpublish superseded versions
+      - name: Deprecate superseded versions
         run: |
           set +e
-          for v in 1.0.0 1.0.1 0.0.0-stage; do
-            echo "unpublishing $v"
-            npm unpublish "dsh-config-transfer@$v" --force
-            echo "exit=$?"
-          done
+          npm deprecate dsh-config-transfer@1.0.0 "Superseded by 1.0.2; old dshsync branding. Use dsh-config-transfer@1.0.2."
+          npm deprecate dsh-config-transfer@1.0.1 "Superseded by 1.0.2; old dshsync branding. Use dsh-config-transfer@1.0.2."
+          npm deprecate dsh-config-transfer@0.0.0-stage "Superseded by 1.0.2."
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
