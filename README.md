@@ -54,7 +54,7 @@ dsh plugin --profile desktop add /path/to/dsh-config-transfer
 ### 从 tarball 安装
 
 ```bash
-dsh plugin --profile desktop add ./dsh-config-transfer-1.0.3.tgz
+dsh plugin --profile desktop add ./dsh-config-transfer-1.0.4.tgz
 ```
 
 安装后可在 **设置 → 配置同步** 找到本插件。
@@ -97,7 +97,7 @@ DSH 里一个 **bundle（组合包）** 是一个 npm 包，它带一份 `cordis
 - 配置层中的 `insert` 条目（例如 MCP 服务器定义）；
 - 设置命名空间；
 - 用户技能目录中的技能文件；
-- 工作区列表仅作为参考信息写入文件，不会自动创建。
+- 工作区列表不写入导出文件，避免本机路径泄漏；导入也不会创建工作区。
 
 ## 不会同步的内容
 
@@ -134,7 +134,7 @@ dsh-config-transfer 会：
 - 需要构建脚本授权的包不会自动授权，请在 Plugins 页面手动处理。
 - 部分插件在安装后需要重启才会出现 Host 条目；相关配置会进入 `~/.dsh/dsh-config-transfer/pending.json`，重启后自动应用。
 - 用户技能不会覆盖新电脑上已有的同名技能。
-- 工作区路径通常与机器绑定，导入时只作为参考信息展示。
+- 工作区路径不导出，避免把本机目录名带进配置文件。
 - 插件 bundle 的启用顺序可能因新机器安装顺序不同而略有差异；如果多个 bundle 之间存在覆盖关系，请在 Plugins 页面确认顺序。
 - 带条件表达式（`disabled: !!js …`）的插件行不会被自动改写，计划中会提示需要手动确认。
 - 被停用 bundle 内部的单行启用状态不会单独导出；重新启用该 bundle 后会使用其默认行状态。

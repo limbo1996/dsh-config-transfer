@@ -126,13 +126,6 @@ function makeCtx(profileDir) {
           },
         }
       }
-      if (name === 'workspaceRegistry') {
-        return {
-          list() {
-            return [{ title: 'project', path: '/tmp/project' }]
-          },
-        }
-      }
       return undefined
     },
   }
@@ -155,8 +148,8 @@ test('collectSnapshot exports config, insert rows, settings, bundles, and skills
     join(profileDir, 'package.json'),
     JSON.stringify({
       name: 'dsh-profile-desktop',
-      dependencies: { 'dsh-cost-meter': '1.9.9' },
-      dsh: { profile: { bundles: ['dsh-cost-meter'] } },
+      dependencies: { 'dsh-cost-meter': '1.9.9', 'dsh-config-transfer': 'link:/tmp/dsh-config-transfer' },
+      dsh: { profile: { bundles: ['dsh-config-transfer', 'dsh-cost-meter'] } },
     }),
   )
   try {
@@ -182,7 +175,9 @@ test('collectSnapshot exports config, insert rows, settings, bundles, and skills
       true,
     )
     assert.equal(result.snapshot.skills.skills.length, 1)
-    assert.equal(result.snapshot.workspaces[0].title, 'project')
+    assert.equal(result.snapshot.profile.dependencies['dsh-config-transfer'], undefined)
+    assert.equal(result.snapshot.profile.bundleOrder.includes('dsh-config-transfer'), false)
+    assert.equal(result.snapshot.workspaces.length, 0)
     assert.equal(result.stats.redactions, 1)
   } finally {
     await rm(root, { recursive: true, force: true })
