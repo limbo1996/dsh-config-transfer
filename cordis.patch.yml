@@ -3,4 +3,4 @@
 # registers the Config Sync page under Settings.
 - insert:
     - id: dshsync
-      name: dshsync
+      name: "@limbo1996/dshsync"

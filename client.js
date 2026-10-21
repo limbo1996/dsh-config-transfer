@@ -1,5 +1,5 @@
 window.__ModuleLoader__.load({
-  id: 'dshsync',
+  id: '@limbo1996/dshsync',
   factory(require) {
     const React = require('react')
     const h = React.createElement

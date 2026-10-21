@@ -4,7 +4,8 @@ This file is the release checklist for publishing **dshsync** to npm and listing
 
 ## 0. Name and accounts
 
-- npm package: **`dshsync`** (available at the time of writing; recheck before publishing).
+- npm package: **`@limbo1996/dshsync`** (scoped to the `limbo1996` account).
+- npm rejects the unscoped name `dshsync` as too similar to the existing `dsh-sync` package; keep the scope.
 - GitHub repository: **`dshsync`** under the `limbo1996` account (change every URL in this repository if your account differs).
 - Do **not** publish under `dsh-config-sync`: that npm name belongs to another package (`dsh-config-sync@1.2.1`). A market index naming it would install the other package.
 - Log in to npm first: `npm login`.
@@ -13,9 +14,9 @@ The package name, the bundle patch row, and the Client module id must stay ident
 
 | Place | Value |
 |---|---|
-| `package.json` → `name` | `dshsync` |
-| `cordis.patch.yml` → row `name` | `dshsync` |
-| `client.js` → `__ModuleLoader__.load({ id })` | `dshsync` |
+| `package.json` → `name` | `@limbo1996/dshsync` |
+| `cordis.patch.yml` → row `name` | `@limbo1996/dshsync` (row `id` stays `dshsync`) |
+| `client.js` → `__ModuleLoader__.load({ id })` | `@limbo1996/dshsync` |
 
 If any one differs, the Host row or the browser half will not load.
 
@@ -43,15 +44,15 @@ If npm asks for a one-time password, add `--otp <code>`.
 Then confirm:
 
 ```bash
-npm view dshsync version
-npm view dshsync dsh.bundle
-npm view dshsync engines
+npm view @limbo1996/dshsync version
+npm view @limbo1996/dshsync dsh.bundle
+npm view @limbo1996/dshsync engines
 ```
 
 Install it the way a user would:
 
 ```bash
-dsh plugin --profile desktop add dshsync
+dsh plugin --profile desktop add @limbo1996/dshsync
 ```
 
 ## 3. Create the public GitHub repository
@@ -65,7 +66,7 @@ On GitHub:
 
 1. The repository must be **public**.
 2. Add the topic **`dsh-plugin`** (GitHub → repository → About → Topics). The installed third-party marketplace searches `topic:dsh-plugin`.
-3. Keep the repository name and the npm package name identical. That marketplace's one-click install uses the repository name as the npm package name.
+3. The repository name (`dshsync`) and the npm package (`@limbo1996/dshsync`) differ because npm blocks the unscoped name. The GitHub-topic marketplace's one-click button uses the repository name, so it will try the blocked `dshsync`; users must enter `@limbo1996/dshsync` manually there. The official Discover index uses the scoped name and installs normally.
 
 ## 4. Publish the market index
 
@@ -83,7 +84,7 @@ After the npm publish, update `market/index.json`:
 - set `publishTimestamp` to the actual npm publish time:
 
 ```bash
-node -e "console.log(Math.floor(new Date(process.argv[1]).getTime()/1000))" "$(npm view dshsync time.1.0.0)"
+node -e "console.log(Math.floor(new Date(process.argv[1]).getTime()/1000))" "$(npm view @limbo1996/dshsync time.1.0.0)"
 ```
 
 - keep `engines.dsh` identical to `package.json` → `engines.dsh`.
@@ -118,14 +119,14 @@ The workflow runs tests and `npm publish --provenance --access public`. Provenan
 
 ## 7. Old export files
 
-Exports produced before the rename contain `dsh-config-sync` as the sync plugin's own bundle/row. The importer treats `dshsync` and `dsh-config-sync` as self names and skips them, so it will not install the unrelated npm package `dsh-config-sync`.
+Exports produced before the scope change contain `dshsync` or `dsh-config-sync` as the sync plugin's own bundle/row. The importer treats `@limbo1996/dshsync`, `dshsync`, and `dsh-config-sync` as self names and skips them, so it will not install an unrelated npm package.
 
 ## 8. Verify the listing
 
 ```bash
-npm view dshsync version
+npm view @limbo1996/dshsync version
 curl -sS https://limbo1996.github.io/dshsync/index.json | head -c 200
-dsh plugin --profile desktop add dshsync
+dsh plugin --profile desktop add @limbo1996/dshsync
 ```
 
-Then open **Plugins → Discover**, add the index URL, search for `dshsync`, and install it. Also verify the **Plugins → Add plugin** path by package name.
+Then open **Plugins → Discover**, add the index URL, search for `dshsync`, and install it. Also verify the **Plugins → Add plugin** path by entering `@limbo1996/dshsync`.

@@ -10,7 +10,7 @@
   },
   "plugins": [
     {
-      "name": "dshsync",
+      "name": "@limbo1996/dshsync",
       "title": {
         "en": "Config Sync",
         "zh": "配置同步"
