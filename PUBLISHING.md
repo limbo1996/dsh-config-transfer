@@ -7,7 +7,6 @@ This file is the release checklist for publishing **dsh-config-transfer** to npm
 - npm package: **`dsh-config-transfer`** (unscoped).
 - GitHub repository: **`dsh-config-transfer`** under the `limbo1996` account (change every URL in this repository if your account differs).
 - npm rejects the name `dsh-config-transfer` as too similar to the existing `dsh-sync` package. This package uses the distinct, descriptive `dsh-config-transfer`, and keeps the repository name identical so the GitHub-topic marketplace can install it in one click.
-- Do **not** publish under `dsh-config-sync`: that npm name belongs to another package (`dsh-config-sync@1.2.1`). A market index naming it would install the other package.
 - Log in to npm first: `npm login`.
 
 The package name, the bundle patch row, and the Client module id must stay identical:

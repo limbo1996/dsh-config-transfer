@@ -4,12 +4,6 @@
 
 DSH Desktop 的登录只同步账号，不会同步本机配置。**dsh-config-transfer** 在旧电脑上导出配置，在新电脑上导入，从而恢复插件、插件设置、MCP 条目和用户技能。
 
-> npm 包名 / GitHub 仓库：`dsh-config-transfer`。
->
-> 设置命名空间、API 路由、导出格式和 pending 路径全部使用 `dsh-config-transfer`。
->
-> 本插件与 npm 上的 `dsh-config-sync` 不是同一个包，也没有隶属关系。dsh-config-transfer 默认**不导出凭据与 API 密钥**；导入时会保留新电脑上已有的凭据。
-
 ## 功能
 
 在 **设置 → 配置同步** 中：
@@ -25,7 +19,7 @@ DSH Desktop 的登录只同步账号，不会同步本机配置。**dsh-config-t
 - 通过 `insert` 行恢复 MCP 服务器等自定义插件条目；
 - 恢复用户技能（`~/.dsh/skills` 与 `~/.agents/skills`）；
 - 对暂时无法应用的配置排队，重启后自动继续应用；
-- 永远不会安装、停用或改写 dsh-config-transfer 自身（包括旧导出文件中的 `dsh-config-sync` 自身条目）。
+- 永远不会安装、停用或改写 dsh-config-transfer 自身。
 
 ## 安装
 
@@ -54,7 +48,7 @@ dsh plugin --profile desktop add /path/to/dsh-config-transfer
 ### 从 tarball 安装
 
 ```bash
-dsh plugin --profile desktop add ./dsh-config-transfer-1.0.5.tgz
+dsh plugin --profile desktop add ./dsh-config-transfer-1.0.6.tgz
 ```
 
 安装后可在 **设置 → 配置同步** 找到本插件。
