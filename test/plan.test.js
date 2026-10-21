@@ -258,6 +258,7 @@ test('an installation-provided bundle is toggled, not reinstalled', async () => 
     assert.equal(built.display.summary.bundlesToInstall, 0)
     assert.equal(built.display.summary.bundlesToEnable, 1)
     assert.equal(built.display.summary.builtinBundles, 1)
+    assert.deepEqual(built.display.builtinBundles, ['@deepseek-ai/dsh-experimental-auto-review'])
     assert.equal(built.display.warnings.some((warning) => warning.includes('not present')), false)
   } finally {
     await rm(root, { recursive: true, force: true })

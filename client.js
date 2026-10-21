@@ -367,6 +367,10 @@ window.__ModuleLoader__.load({
           open: true,
         }),
         h(DetailList, {
+          title: t('exportStatBuiltin'),
+          items: (plan.builtinBundles || []).map((name) => ({ name })),
+        }),
+        h(DetailList, {
           title: t('configsToApply'),
           items: (plan.configs || []).map((item) => ({ name: item.name || item.id })),
         }),
