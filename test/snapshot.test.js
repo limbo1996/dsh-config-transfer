@@ -176,6 +176,7 @@ test('collectSnapshot exports config, insert rows, settings, bundles, and skills
     )
     assert.equal(result.snapshot.skills.skills.length, 1)
     assert.equal(result.snapshot.profile.dependencies['dsh-config-transfer'], undefined)
+    assert.equal(result.snapshot.profile.bundles.some((bundle) => bundle.name === 'dsh-config-transfer'), false)
     assert.equal(result.snapshot.profile.bundleOrder.includes('dsh-config-transfer'), false)
     assert.equal(result.snapshot.workspaces.length, 0)
     assert.equal(result.stats.redactions, 1)

@@ -54,7 +54,7 @@ dsh plugin --profile desktop add /path/to/dsh-config-transfer
 ### 从 tarball 安装
 
 ```bash
-dsh plugin --profile desktop add ./dsh-config-transfer-1.0.4.tgz
+dsh plugin --profile desktop add ./dsh-config-transfer-1.0.5.tgz
 ```
 
 安装后可在 **设置 → 配置同步** 找到本插件。
