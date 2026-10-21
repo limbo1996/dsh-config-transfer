@@ -1,5 +1,5 @@
 /**
- * dsh-config-sync — Host half.
+ * dshsync — Host half.
  *
  * Serves the authenticated /api/dshsync routes used by the Settings page:
  * export a portable snapshot, plan an import without changing anything, apply
@@ -132,7 +132,7 @@ export function apply(ctx) {
             scheduleRetry(8000, false, true)
           }
         } catch (error) {
-          ctx.logger?.warn?.(`dsh-config-sync: pending retry failed: ${error?.message ?? error}`)
+          ctx.logger?.warn?.(`dshsync: pending retry failed: ${error?.message ?? error}`)
         } finally {
           retrying = false
         }
@@ -157,7 +157,7 @@ export function apply(ctx) {
         }
       }
     },
-    'dsh-config-sync: pending retry listeners',
+    'dshsync: pending retry listeners',
   )
 
   const handleExport = async () => {
@@ -177,7 +177,7 @@ export function apply(ctx) {
         redactionCount: stats.redactions,
       })
     } catch (error) {
-      ctx.logger?.warn?.(`dsh-config-sync: export failed: ${error?.message ?? error}`)
+      ctx.logger?.warn?.(`dshsync: export failed: ${error?.message ?? error}`)
       return failure(error, 500)
     }
   }
@@ -229,7 +229,7 @@ export function apply(ctx) {
             message: 'Import finished',
           })
         } catch (error) {
-          ctx.logger?.warn?.(`dsh-config-sync: import failed: ${error?.message ?? error}`)
+          ctx.logger?.warn?.(`dshsync: import failed: ${error?.message ?? error}`)
           update({
             phase: 'error',
             finishedAt: new Date().toISOString(),
@@ -290,7 +290,7 @@ export function apply(ctx) {
           }
         }
       },
-      'dsh-config-sync: route disposal',
+      'dshsync: route disposal',
     )
   })
 }

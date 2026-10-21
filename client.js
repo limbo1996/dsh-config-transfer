@@ -1,5 +1,5 @@
 window.__ModuleLoader__.load({
-  id: 'dsh-config-sync',
+  id: 'dshsync',
   factory(require) {
     const React = require('react')
     const h = React.createElement
@@ -178,7 +178,7 @@ window.__ModuleLoader__.load({
       .dshsync-details > summary { cursor: pointer; color: var(--dsw-alias-label-secondary); }
       .dshsync-list { margin: 8px 0 0; padding: 0; list-style: none; }
       .dshsync-list li { padding: 3px 0; overflow-wrap: anywhere; }
-      .dshsync-list code { font-family: var(--dsw-alias-code-font, ui-monospace, SFMono-Regular, Menlo, monospace); font-size: 11px; }
+      .dshsync-list code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; }
       .dshsync-progress { height: 6px; margin-top: 14px; overflow: hidden; border-radius: 999px; background: var(--dsw-alias-bg-layer-2); }
       .dshsync-progress-fill { height: 100%; border-radius: 999px; background: var(--dsw-alias-brand-primary); transition: width 0.25s ease; }
       .dshsync-status { display: flex; align-items: center; gap: 8px; margin-top: 12px; font-size: 13px; }
@@ -788,11 +788,11 @@ window.__ModuleLoader__.load({
       apply(ctx) {
         ctx.effect(
           () => ctx.locale.register('dshsync', 'en', EN),
-          'dsh-config-sync: English dictionary',
+          'dshsync: English dictionary',
         )
         ctx.effect(
           () => ctx.locale.register('dshsync', 'zh', ZH),
-          'dsh-config-sync: Chinese dictionary',
+          'dshsync: Chinese dictionary',
         )
         const translate = ctx.locale.bind('dshsync')
         ctx.effect(
@@ -801,7 +801,7 @@ window.__ModuleLoader__.load({
               ctx.slots.register(
                 {
                   name: 'settings.section',
-                  id: 'dsh-config-sync',
+                  id: 'dshsync',
                   order: 35,
                   label: () => translate('sectionLabel'),
                   locale: 'dshsync',
@@ -809,7 +809,7 @@ window.__ModuleLoader__.load({
                 ConfigSyncPage,
               ),
             ),
-          'dsh-config-sync: settings section',
+          'dshsync: settings section',
         )
       },
     }

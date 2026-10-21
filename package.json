@@ -1,14 +1,15 @@
 {
-  "name": "dsh-config-sync",
+  "name": "dshsync",
   "version": "1.0.0",
-  "private": true,
-  "description": "Export and import a DeepSeek Harness Desktop configuration, including installed plugins and their settings.",
+  "description": "Export and import a DeepSeek Harness Desktop configuration, including installed plugins, plugin settings, MCP entries, and user skills. Credentials and API keys are not exported.",
   "type": "module",
+  "main": "index.js",
   "exports": {
     ".": "./index.js",
     "./client": "./client.js",
     "./locale/*.json": "./locale/*.json",
-    "./icon": "./icon.svg"
+    "./icon": "./icon.svg",
+    "./package.json": "./package.json"
   },
   "files": [
     "index.js",
@@ -17,13 +18,47 @@
     "cordis.patch.yml",
     "locale/*.json",
     "icon.svg",
+    "market/index.json",
     "README.md",
     "LICENSE"
   ],
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "config",
+    "sync",
+    "backup",
+    "migration",
+    "desktop",
+    "web-ui",
+    "mcp"
+  ],
+  "author": "limbo1996",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/limbo1996/dshsync.git"
+  },
+  "homepage": "https://github.com/limbo1996/dshsync#readme",
+  "bugs": {
+    "url": "https://github.com/limbo1996/dshsync/issues"
+  },
+  "engines": {
+    "node": ">=20.18",
+    "dsh": ">=0.2.1-rc.1 <0.3.0-0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "test": "node --test \"test/**/*.test.js\""
+  },
   "dependencies": {
     "yaml": "^2.8.1"
   },
   "dsh": {
+    "manifestVersion": 1,
     "bundle": {
       "patch": "./cordis.patch.yml"
     },
@@ -34,10 +69,14 @@
         "@deepseek-ai/dsh-client-locale",
         "@deepseek-ai/dsh-client-ui-settings"
       ]
+    },
+    "compatibility": {
+      "dsh": ">=0.2.1-rc.1 <0.3.0-0",
+      "node": ">=20.18",
+      "profiles": [
+        "desktop",
+        "web"
+      ]
     }
-  },
-  "license": "MIT",
-  "scripts": {
-    "test": "node --test test/*.test.js"
   }
 }

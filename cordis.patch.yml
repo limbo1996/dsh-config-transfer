@@ -1,6 +1,6 @@
-# Bundle patch for dsh-config-sync.
+# Bundle patch for dshsync.
 # The host half serves the authenticated /api/dshsync routes; the browser half
 # registers the Config Sync page under Settings.
 - insert:
-    - id: dsh-config-sync
-      name: dsh-config-sync
+    - id: dshsync
+      name: dshsync

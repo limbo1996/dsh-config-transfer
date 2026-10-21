@@ -1,0 +1,57 @@
+{
+  "format": 1,
+  "title": {
+    "en": "dshsync",
+    "zh": "dshsync"
+  },
+  "description": {
+    "en": "Portable DeepSeek Harness configuration export and import.",
+    "zh": "可移植的 DeepSeek Harness 配置导出与导入。"
+  },
+  "plugins": [
+    {
+      "name": "dshsync",
+      "title": {
+        "en": "Config Sync",
+        "zh": "配置同步"
+      },
+      "description": {
+        "en": "Export and import a DSH Desktop configuration, including installed plugins, plugin settings, MCP entries, and user skills.",
+        "zh": "导出/导入 DSH Desktop 配置，包含已安装插件、插件设置、MCP 条目和用户技能。"
+      },
+      "icon": "https://raw.githubusercontent.com/limbo1996/dshsync/main/icon.svg",
+      "author": "limbo1996",
+      "homepage": "https://github.com/limbo1996/dshsync",
+      "repository": {
+        "url": "https://github.com/limbo1996/dshsync"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh-plugin",
+          "deepseek-harness",
+          "config",
+          "sync",
+          "backup",
+          "migration",
+          "mcp",
+          "desktop"
+        ]
+      },
+      "dist-tags": {
+        "latest": "1.0.0"
+      },
+      "versions": [
+        {
+          "version": "1.0.0",
+          "publishTimestamp": 1792549566,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.2.1-rc.1 <0.3.0-0"
+          }
+        }
+      ]
+    }
+  ]
+}

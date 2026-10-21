@@ -262,3 +262,37 @@ test('an installation-provided bundle is toggled, not reinstalled', async () => 
     await rm(root, { recursive: true, force: true })
   }
 })
+
+test('the sync plugin itself is never installed, toggled, or edited', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'dshsync-plan-'))
+  const profileDir = join(root, 'profile')
+  await mkdir(profileDir, { recursive: true })
+  await writeFile(join(profileDir, 'cordis.patch.yml'), '[]\n')
+  const payload = makePayload()
+  payload.profile.bundles = [
+    { name: 'dshsync', version: '1.0.0', official: false, availability: 'profile', enabled: true, installed: true },
+    { name: 'dsh-config-sync', version: '1.0.0', official: false, availability: 'profile', enabled: true, installed: true },
+  ]
+  payload.profile.plugins = [
+    { patchId: 'dsh-config-sync', moduleName: 'dsh-config-sync', enabled: false },
+  ]
+  payload.profile.dependencies = { 'dsh-config-sync': 'link:/Users/me/dsh-config-sync' }
+  payload.profile.inserts = []
+  payload.profile.configs = []
+  payload.profile.settings = []
+  payload.skills = { skills: [] }
+  payload.workspaces = []
+  try {
+    const built = await buildPlan(makeCtx(profileDir), {
+      dshHome: join(root, 'dsh'),
+      agentsHome: join(root, 'agents'),
+    }, payload)
+    assert.equal(built.display.summary.bundlesToInstall, 0)
+    assert.equal(built.display.summary.bundlesToEnable, 0)
+    assert.equal(built.display.summary.rowsToChange, 0)
+    assert.equal(built.display.summary.manual, 0)
+    assert.ok(built.display.warnings.some((warning) => warning.includes('dshsync plugin itself')))
+  } finally {
+    await rm(root, { recursive: true, force: true })
+  }
+})
