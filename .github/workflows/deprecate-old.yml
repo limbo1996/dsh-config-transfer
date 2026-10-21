@@ -1,0 +1,21 @@
+name: deprecate-old
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deprecate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+      - run: |
+          npm deprecate dsh-config-transfer@1.0.3 "Superseded by 1.0.5; earlier export could include local workspace paths."
+          npm deprecate dsh-config-transfer@1.0.4 "Superseded by 1.0.5; exported bundles could include the plugin's own link path."
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
