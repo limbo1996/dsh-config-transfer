@@ -73,9 +73,21 @@ dsh plugin --profile desktop add ./dshsync-1.0.0.tgz
 6. 点击 **开始导入**。
 7. 若提示需要重启，重启 DSH Desktop。重启后插件加载完成，排队中的配置会自动应用。
 
+## Bundle 与插件的区别
+
+DSH 里一个 **bundle（组合包）** 是一个 npm 包，它带一份 `cordis.patch.yml`，告诉 DSH 要挂哪些插件行；一个 bundle 里可以有一行或多行插件。bundle 是“安装单元 + 接线图”，plugin 是真正导出 `apply(ctx)` 的模块。
+
+同步时会区分两类 bundle：
+
+- **第三方 / 额外安装的 bundle**：从 npm、Git、tarball 或本地路径安装进 profile 的插件包。dshsync 会记录它们的安装 spec、版本和启用状态，在新电脑上重新安装。
+- **DSH 自带的 bundle**：随 DSH 安装包提供（`availability: "installation"`），例如 `@deepseek-ai/dsh-base`、`@deepseek-ai/dsh-web-app`，以及官方可选插件。dshsync 不会重复安装它们，只恢复启用状态。
+
+保存页会分别显示 **第三方插件** 和 **DSH 自带** 的数量；导入计划会说明有多少 DSH 自带 bundle 已存在、不会被重复安装。
+
 ## 会同步的内容
 
-- 已安装 bundle 的清单、版本、安装来源、启用状态；
+- 第三方 / 额外安装 bundle 的清单、版本、安装来源、启用状态；
+- DSH 自带 bundle 的启用状态（不重复安装）；
 - 每个插件行的启用/停用状态；
 - 配置层（`cordis.patch.yml`）中的插件配置；
 - 配置层中的 `insert` 条目（例如 MCP 服务器定义）；

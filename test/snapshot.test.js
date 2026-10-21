@@ -42,6 +42,18 @@ function makeCtx(profileDir) {
                 error: null,
               },
               {
+                name: '@deepseek-ai/dsh-web-app',
+                version: '0.2.1-rc.2',
+                official: false,
+                availability: 'installation',
+                enabled: true,
+                installed: false,
+                optional: false,
+                removable: false,
+                rows: [],
+                error: null,
+              },
+              {
                 name: 'dsh-disabled-installed',
                 version: '1.0.0',
                 official: false,
@@ -158,10 +170,16 @@ test('collectSnapshot exports config, insert rows, settings, bundles, and skills
     assert.equal(result.snapshot.profile.inserts[0].id, 'mcp-zotero')
     assert.equal(result.snapshot.profile.inserts[0].config.command, 'zotero-mcp')
     assert.equal(result.snapshot.profile.settings.length, 1)
-    assert.equal(result.snapshot.profile.bundles.length, 2)
+    assert.equal(result.snapshot.profile.bundles.length, 3)
     assert.deepEqual(
       result.snapshot.profile.bundles.map((bundle) => bundle.name).sort(),
-      ['dsh-cost-meter', 'dsh-disabled-installed'],
+      ['@deepseek-ai/dsh-web-app', 'dsh-cost-meter', 'dsh-disabled-installed'],
+    )
+    assert.equal(result.stats.builtinBundles, 1)
+    assert.equal(result.stats.thirdPartyBundles, 2)
+    assert.equal(
+      result.snapshot.profile.bundles.find((bundle) => bundle.name === '@deepseek-ai/dsh-web-app').builtIn,
+      true,
     )
     assert.equal(result.snapshot.skills.skills.length, 1)
     assert.equal(result.snapshot.workspaces[0].title, 'project')

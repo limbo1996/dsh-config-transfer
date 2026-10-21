@@ -15,7 +15,8 @@ window.__ModuleLoader__.load({
       exportButton: 'Save to file',
       exporting: 'Reading configuration…',
       exportDone: 'Configuration file downloaded.',
-      exportStatBundles: 'Plugins',
+      exportStatThirdParty: 'Third-party plugins',
+      exportStatBuiltin: 'DSH built-in',
       exportStatConfigs: 'Config entries',
       exportStatInserts: 'Inserted rows',
       exportStatSkills: 'Skills',
@@ -26,6 +27,8 @@ window.__ModuleLoader__.load({
       importButton: 'Choose file…',
       planTitle: 'Review import',
       planSource: 'From {profile} · {platform} · {date}',
+      planBuiltinNote:
+        'This configuration contains {count} DSH built-in bundles; they are not installed again, only their enablement is restored.',
       planSummary: 'This import will:',
       bundlesToInstall: 'Install plugins',
       bundlesToEnable: 'Enable plugins',
@@ -35,6 +38,9 @@ window.__ModuleLoader__.load({
       configsToApply: 'Apply configuration',
       settingsToApply: 'Apply settings',
       skillsToImport: 'Import skills',
+      skillsSkipped: 'Skills already present',
+      skillsSkippedNote:
+        '{count} skills already exist on this machine and will not be overwritten.',
       pendingConfigs: 'Wait for restart',
       planPendingHint: 'Some settings need a restart before they can be applied: {count}',
       manualActions: 'Manual steps',
@@ -58,6 +64,7 @@ window.__ModuleLoader__.load({
       reportSettings: 'Settings applied',
       reportSettingsFailures: 'Settings failures',
       reportSkills: 'Skills written',
+      reportSkillsSkipped: 'Skills skipped',
       reportPending: 'Waiting for restart',
       reportRestart: 'Restart required',
       restartHint:
@@ -87,7 +94,8 @@ window.__ModuleLoader__.load({
       exportButton: '保存到文件',
       exporting: '正在读取配置…',
       exportDone: '配置文件已下载。',
-      exportStatBundles: '插件',
+      exportStatThirdParty: '第三方插件',
+      exportStatBuiltin: 'DSH 自带',
       exportStatConfigs: '配置项',
       exportStatInserts: '插入条目',
       exportStatSkills: '技能',
@@ -98,6 +106,8 @@ window.__ModuleLoader__.load({
       importButton: '选择文件…',
       planTitle: '确认导入',
       planSource: '来自 {profile} · {platform} · {date}',
+      planBuiltinNote:
+        '这份配置里有 {count} 个 DSH 自带 bundle；导入不会重复安装，只恢复其启用状态。',
       planSummary: '本次导入将：',
       bundlesToInstall: '安装插件',
       bundlesToEnable: '启用插件',
@@ -107,6 +117,8 @@ window.__ModuleLoader__.load({
       configsToApply: '应用配置',
       settingsToApply: '应用设置',
       skillsToImport: '导入技能',
+      skillsSkipped: '已存在的技能',
+      skillsSkippedNote: '本机已有 {count} 个技能，导入不会覆盖。',
       pendingConfigs: '等待重启',
       planPendingHint: '部分设置需要等重启后才能应用：{count} 项',
       manualActions: '手动步骤',
@@ -130,6 +142,7 @@ window.__ModuleLoader__.load({
       reportSettings: '已应用设置',
       reportSettingsFailures: '设置失败',
       reportSkills: '已写入技能',
+      reportSkillsSkipped: '已跳过的技能',
       reportPending: '等待重启',
       reportRestart: '需要重启',
       restartHint:
@@ -327,6 +340,12 @@ window.__ModuleLoader__.load({
         pendingTotal > 0
           ? h('p', { className: 'dshsync-note' }, t('planPendingHint', { count: pendingTotal }))
           : null,
+        (summary.builtinBundles || 0) > 0
+          ? h('p', { className: 'dshsync-note' }, t('planBuiltinNote', { count: summary.builtinBundles }))
+          : null,
+        (summary.skillsSkipped || 0) > 0
+          ? h('p', { className: 'dshsync-note' }, t('skillsSkippedNote', { count: summary.skillsSkipped }))
+          : null,
         plan.source && (plan.source.profile || plan.source.platform)
           ? h(
               'div',
@@ -360,6 +379,13 @@ window.__ModuleLoader__.load({
           items: (plan.skills || []).map((item) => ({
             name: item.name,
             detail: `${item.root} · ${item.kind} · ${item.fileCount}`,
+          })),
+        }),
+        h(DetailList, {
+          title: t('skillsSkipped'),
+          items: (plan.skipped || []).map((item) => ({
+            name: item.id,
+            detail: item.detail,
           })),
         }),
         h(DetailList, {
@@ -512,6 +538,10 @@ window.__ModuleLoader__.load({
         h(DetailList, {
           title: t('reportSkills'),
           items: (report.skills?.written || []).map((item) => ({ name: item.name, detail: item.root })),
+        }),
+        h(DetailList, {
+          title: t('reportSkillsSkipped'),
+          items: (report.skills?.skipped || []).map((item) => ({ name: item.name, detail: item.reason })),
         }),
         h(DetailList, {
           title: t('reportManual'),
@@ -720,7 +750,11 @@ window.__ModuleLoader__.load({
           exportStats
             ? h(StatGrid, {
                 items: [
-                  { label: t('exportStatBundles'), value: exportStats.bundles || 0 },
+                  {
+                    label: t('exportStatThirdParty'),
+                    value: exportStats.thirdPartyBundles ?? exportStats.bundles ?? 0,
+                  },
+                  { label: t('exportStatBuiltin'), value: exportStats.builtinBundles ?? 0 },
                   { label: t('exportStatConfigs'), value: exportStats.configs || 0 },
                   { label: t('exportStatInserts'), value: exportStats.inserts || 0 },
                   { label: t('exportStatSkills'), value: exportStats.skills || 0 },

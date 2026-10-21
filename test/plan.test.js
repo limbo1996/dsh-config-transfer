@@ -257,6 +257,7 @@ test('an installation-provided bundle is toggled, not reinstalled', async () => 
     const built = await buildPlan(ctx, { dshHome: join(root, 'dsh'), agentsHome: join(root, 'agents') }, payload)
     assert.equal(built.display.summary.bundlesToInstall, 0)
     assert.equal(built.display.summary.bundlesToEnable, 1)
+    assert.equal(built.display.summary.builtinBundles, 1)
     assert.equal(built.display.warnings.some((warning) => warning.includes('not present')), false)
   } finally {
     await rm(root, { recursive: true, force: true })
@@ -407,6 +408,35 @@ test('local items already present on this machine are not manual steps', async (
     assert.equal(built.display.summary.inserts, 0)
     assert.equal(built.display.summary.manual, 0)
     assert.equal(built.display.conflicts.length, 0)
+  } finally {
+    await rm(root, { recursive: true, force: true })
+  }
+})
+
+test('an existing skill is skipped, not reported as a conflict', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'dshsync-plan-'))
+  const profileDir = join(root, 'profile')
+  const dshHome = join(root, 'dsh')
+  await mkdir(profileDir, { recursive: true })
+  await mkdir(join(dshHome, 'skills'), { recursive: true })
+  await writeFile(join(dshHome, 'skills', 'my-skill.md'), '# existing\n')
+  await writeFile(join(profileDir, 'cordis.patch.yml'), '[]\n')
+  const payload = makePayload()
+  payload.profile.bundles = []
+  payload.profile.plugins = []
+  payload.profile.inserts = []
+  payload.profile.configs = []
+  payload.profile.settings = []
+  payload.workspaces = []
+  try {
+    const built = await buildPlan(makeCtx(profileDir), {
+      dshHome,
+      agentsHome: join(root, 'agents'),
+    }, payload)
+    assert.equal(built.display.summary.skills, 0)
+    assert.equal(built.display.summary.skillsSkipped, 1)
+    assert.equal(built.display.summary.conflicts, 0)
+    assert.equal(built.display.skipped[0].kind, 'skill')
   } finally {
     await rm(root, { recursive: true, force: true })
   }
