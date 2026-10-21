@@ -1,0 +1,19 @@
+name: deprecate-1.0.2
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deprecate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+      - run: npm deprecate dsh-config-transfer@1.0.2 "Superseded by 1.0.3; contains legacy dshsync compatibility. Use dsh-config-transfer@1.0.3."
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
