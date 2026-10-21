@@ -8,11 +8,7 @@ DSH Desktop 的登录只同步账号，不会同步本机配置。**dsh-config-t
 >
 > 设置命名空间、API 路由、导出格式和 pending 路径全部使用 `dsh-config-transfer`。
 >
-> 为兼容旧文件，导入时仍接受 `format: "dshsync"`，以及旧自身包名 `dshsync`、`@limbo1996/dshsync`、`dsh-config-sync`；新导出一律写 `dsh-config-transfer`。
->
 > 本插件与 npm 上的 `dsh-config-sync` 不是同一个包，也没有隶属关系。dsh-config-transfer 默认**不导出凭据与 API 密钥**；导入时会保留新电脑上已有的凭据。
->
-> npm 上的 `dshsync` 与已有包 `dsh-sync` 太相似，因此公开名称使用 `dsh-config-transfer`。
 
 ## 功能
 
@@ -58,7 +54,7 @@ dsh plugin --profile desktop add /path/to/dsh-config-transfer
 ### 从 tarball 安装
 
 ```bash
-dsh plugin --profile desktop add ./dsh-config-transfer-1.0.2.tgz
+dsh plugin --profile desktop add ./dsh-config-transfer-1.0.3.tgz
 ```
 
 安装后可在 **设置 → 配置同步** 找到本插件。
@@ -157,7 +153,7 @@ dsh-config-transfer 会：
 
 ## 文件格式
 
-导出文件写入 `format: "dsh-config-transfer"`；导入旧文件时仍接受 `format: "dshsync"`。
+导出文件写入 `format: "dsh-config-transfer"`。
 
 导出文件为 JSON，顶层包含（`format` 使用 `dsh-config-transfer`）：
 
@@ -191,7 +187,6 @@ dsh-config-transfer 会：
 - **插件安装失败**：检查网络、npm registry 和 pnpm；查看导入报告中的安装诊断。
 - **本地插件未恢复**：`link:` / 本地路径插件不会被复制。请在新电脑上重新安装该插件，然后重新导入配置。
 - **导入后页面消失**：如果旧配置停用了 Settings 插件，导入会忠实恢复该状态。可在 Plugins 页面重新启用。
-- **旧导出文件里有 `dshsync`、`@limbo1996/dshsync` 或 `dsh-config-sync`**：导入器会把这些旧自身条目识别为自身并跳过；新导出使用 `dsh-config-transfer`。
 
 ## 开发
 

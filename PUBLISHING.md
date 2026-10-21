@@ -117,11 +117,7 @@ git push --follow-tags
 
 The workflow runs tests and `npm publish --provenance --access public`. Provenance requires a public repository and the `id-token: write` permission already set in the workflow. If you publish manually instead, delete or disable the workflow.
 
-## 7. Old export files
-
-Exports produced before the rename use `format: "dshsync"` and old self names `dshsync`, `@limbo1996/dshsync`, and `dsh-config-sync`. The importer accepts the legacy format and skips those self names. New exports use `format: "dsh-config-transfer"`.
-
-## 8. Verify the listing
+## 7. Verify the listing
 
 ```bash
 npm view dsh-config-transfer version

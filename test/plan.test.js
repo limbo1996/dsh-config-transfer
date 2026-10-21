@@ -156,18 +156,6 @@ test('buildPlan reports installs, manual steps, inserts, configs, settings, rows
   }
 })
 
-test('accepts the legacy dshsync export format', async () => {
-  const root = await mkdtemp(join(tmpdir(), 'dsh-config-transfer-plan-legacy-'))
-  try {
-    const payload = makePayload()
-    payload.format = 'dshsync'
-    const built = await buildPlan(makeCtx(root), { dshHome: root, agentsHome: root }, payload)
-    assert.ok(built.actions)
-  } finally {
-    await rm(root, { recursive: true, force: true })
-  }
-})
-
 test('buildPlan rejects unknown formats and versions', async () => {
   const root = await mkdtemp(join(tmpdir(), 'dsh-config-transfer-plan-'))
   try {
@@ -285,12 +273,11 @@ test('the sync plugin itself is never installed, toggled, or edited', async () =
   const payload = makePayload()
   payload.profile.bundles = [
     { name: 'dsh-config-transfer', version: '1.0.0', official: false, availability: 'profile', enabled: true, installed: true },
-    { name: 'dsh-config-sync', version: '1.0.0', official: false, availability: 'profile', enabled: true, installed: true },
   ]
   payload.profile.plugins = [
-    { patchId: 'dsh-config-sync', moduleName: 'dsh-config-sync', enabled: false },
+    { patchId: 'dsh-config-transfer', moduleName: 'dsh-config-transfer', enabled: false },
   ]
-  payload.profile.dependencies = { 'dsh-config-sync': 'link:/Users/me/dsh-config-sync' }
+  payload.profile.dependencies = { 'dsh-config-transfer': 'link:/Users/me/dsh-config-transfer' }
   payload.profile.inserts = []
   payload.profile.configs = []
   payload.profile.settings = []
