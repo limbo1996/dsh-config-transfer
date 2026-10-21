@@ -11,7 +11,7 @@ import {
 } from '../lib/patch.js'
 
 async function withTempFile(content) {
-  const dir = await mkdtemp(join(tmpdir(), 'dshsync-patch-'))
+  const dir = await mkdtemp(join(tmpdir(), 'dsh-config-transfer-patch-'))
   const path = join(dir, 'cordis.patch.yml')
   await writeFile(path, content, 'utf8')
   return { dir, path }
@@ -86,7 +86,7 @@ test('patch insert refuses a local plugin path and a name conflict', async () =>
 })
 
 test('missing patch file is treated as an empty list', async () => {
-  const dir = await mkdtemp(join(tmpdir(), 'dshsync-patch-'))
+  const dir = await mkdtemp(join(tmpdir(), 'dsh-config-transfer-patch-'))
   try {
     const document = await loadPatchDocument(join(dir, 'missing.yml'))
     const result = await applyInsertRows(document, [{ id: 'x', name: '@scope/x' }])

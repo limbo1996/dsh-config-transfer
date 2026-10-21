@@ -1,8 +1,8 @@
 {
   "format": 1,
   "title": {
-    "en": "dshsync",
-    "zh": "dshsync"
+    "en": "dsh-config-transfer",
+    "zh": "dsh-config-transfer"
   },
   "description": {
     "en": "Portable DeepSeek Harness configuration export and import.",
@@ -38,11 +38,11 @@
         ]
       },
       "dist-tags": {
-        "latest": "1.0.1"
+        "latest": "1.0.2"
       },
       "versions": [
         {
-          "version": "1.0.1",
+          "version": "1.0.2",
           "publishTimestamp": 1792567374,
           "source": {
             "type": "npm"

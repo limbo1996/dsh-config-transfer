@@ -6,7 +6,7 @@ This file is the release checklist for publishing **dsh-config-transfer** to npm
 
 - npm package: **`dsh-config-transfer`** (unscoped).
 - GitHub repository: **`dsh-config-transfer`** under the `limbo1996` account (change every URL in this repository if your account differs).
-- npm rejects the name `dshsync` as too similar to the existing `dsh-sync` package. This package uses the distinct, descriptive `dsh-config-transfer`, and keeps the repository name identical so the GitHub-topic marketplace can install it in one click.
+- npm rejects the name `dsh-config-transfer` as too similar to the existing `dsh-sync` package. This package uses the distinct, descriptive `dsh-config-transfer`, and keeps the repository name identical so the GitHub-topic marketplace can install it in one click.
 - Do **not** publish under `dsh-config-sync`: that npm name belongs to another package (`dsh-config-sync@1.2.1`). A market index naming it would install the other package.
 - Log in to npm first: `npm login`.
 
@@ -15,7 +15,7 @@ The package name, the bundle patch row, and the Client module id must stay ident
 | Place | Value |
 |---|---|
 | `package.json` → `name` | `dsh-config-transfer` |
-| `cordis.patch.yml` → row `name` | `dsh-config-transfer` (row `id` stays `dshsync`) |
+| `cordis.patch.yml` → row `name` | `dsh-config-transfer` (row `id` stays `dsh-config-transfer`) |
 | `client.js` → `__ModuleLoader__.load({ id })` | `dsh-config-transfer` |
 
 If any one differs, the Host row or the browser half will not load.
@@ -119,7 +119,7 @@ The workflow runs tests and `npm publish --provenance --access public`. Provenan
 
 ## 7. Old export files
 
-Exports produced before the rename contain `dshsync`, `@limbo1996/dshsync`, or `dsh-config-sync` as the sync plugin's own bundle/row. The importer treats `dsh-config-transfer`, `@limbo1996/dshsync`, `dshsync`, and `dsh-config-sync` as self names and skips them, so it will not install an unrelated npm package.
+Exports produced before the rename use `format: "dshsync"` and old self names `dshsync`, `@limbo1996/dshsync`, and `dsh-config-sync`. The importer accepts the legacy format and skips those self names. New exports use `format: "dsh-config-transfer"`.
 
 ## 8. Verify the listing
 
@@ -129,4 +129,4 @@ curl -sS https://limbo1996.github.io/dsh-config-transfer/index.json | head -c 20
 dsh plugin --profile desktop add dsh-config-transfer
 ```
 
-Then open **Plugins → Discover**, add the index URL, search for `dshsync`, and install it. Also verify the **Plugins → Add plugin** path by entering `dsh-config-transfer`.
+Then open **Plugins → Discover**, add the index URL, search for `dsh-config-transfer`, and install it. Also verify the **Plugins → Add plugin** path by entering `dsh-config-transfer`.

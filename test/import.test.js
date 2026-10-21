@@ -104,7 +104,7 @@ function makeCtx(profileDir, calls) {
 }
 
 test('runImport installs, writes inserts, toggles, and applies config', async () => {
-  const root = await mkdtemp(join(tmpdir(), 'dshsync-import-'))
+  const root = await mkdtemp(join(tmpdir(), 'dsh-config-transfer-import-'))
   const profileDir = join(root, 'profile')
   await mkdir(profileDir, { recursive: true })
   await writeFile(join(profileDir, 'cordis.patch.yml'), '[]\n')
@@ -132,7 +132,7 @@ test('runImport installs, writes inserts, toggles, and applies config', async ()
 })
 
 test('runImport queues a config whose entry is not live and retry applies it later', async () => {
-  const root = await mkdtemp(join(tmpdir(), 'dshsync-import-'))
+  const root = await mkdtemp(join(tmpdir(), 'dsh-config-transfer-import-'))
   const profileDir = join(root, 'profile')
   await mkdir(profileDir, { recursive: true })
   await writeFile(join(profileDir, 'cordis.patch.yml'), '[]\n')

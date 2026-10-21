@@ -1,7 +1,7 @@
 /**
- * dshsync — Host half.
+ * dsh-config-transfer — Host half.
  *
- * Serves the authenticated /api/dshsync routes used by the Settings page:
+ * Serves the authenticated /api/dsh-config-transfer routes used by the Settings page:
  * export a portable snapshot, plan an import without changing anything, apply
  * a planned import, and report progress. Import installs bundles through
  * pluginManager, edits configuration through configEditor, and writes only
@@ -17,10 +17,10 @@ import { runImport, retryPending } from './lib/import.js'
 import { pendingCounts, readPending } from './lib/pending.js'
 
 const ROUTES = {
-  export: '/api/dshsync/export',
-  plan: '/api/dshsync/plan',
-  apply: '/api/dshsync/apply',
-  state: '/api/dshsync/state',
+  export: '/api/dsh-config-transfer/export',
+  plan: '/api/dsh-config-transfer/plan',
+  apply: '/api/dsh-config-transfer/apply',
+  state: '/api/dsh-config-transfer/state',
 }
 
 function resolveHomes() {
@@ -55,7 +55,7 @@ function failure(error, status = 400) {
   return jsonResponse(
     {
       ok: false,
-      code: 'dshsync-error',
+      code: 'dsh-config-transfer-error',
       message: error instanceof Error ? error.message : String(error),
     },
     status,
@@ -132,7 +132,7 @@ export function apply(ctx) {
             scheduleRetry(8000, false, true)
           }
         } catch (error) {
-          ctx.logger?.warn?.(`dshsync: pending retry failed: ${error?.message ?? error}`)
+          ctx.logger?.warn?.(`dsh-config-transfer: pending retry failed: ${error?.message ?? error}`)
         } finally {
           retrying = false
         }
@@ -157,7 +157,7 @@ export function apply(ctx) {
         }
       }
     },
-    'dshsync: pending retry listeners',
+    'dsh-config-transfer: pending retry listeners',
   )
 
   const handleExport = async () => {
@@ -177,7 +177,7 @@ export function apply(ctx) {
         redactionCount: stats.redactions,
       })
     } catch (error) {
-      ctx.logger?.warn?.(`dshsync: export failed: ${error?.message ?? error}`)
+      ctx.logger?.warn?.(`dsh-config-transfer: export failed: ${error?.message ?? error}`)
       return failure(error, 500)
     }
   }
@@ -229,7 +229,7 @@ export function apply(ctx) {
             message: 'Import finished',
           })
         } catch (error) {
-          ctx.logger?.warn?.(`dshsync: import failed: ${error?.message ?? error}`)
+          ctx.logger?.warn?.(`dsh-config-transfer: import failed: ${error?.message ?? error}`)
           update({
             phase: 'error',
             finishedAt: new Date().toISOString(),
@@ -290,7 +290,7 @@ export function apply(ctx) {
           }
         }
       },
-      'dshsync: route disposal',
+      'dsh-config-transfer: route disposal',
     )
   })
 }

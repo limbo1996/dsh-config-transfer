@@ -7,7 +7,7 @@ import { buildPlan } from '../lib/plan.js'
 
 function makePayload() {
   return {
-    format: 'dshsync',
+    format: 'dsh-config-transfer',
     version: 1,
     exportedAt: '2026-10-20T10:00:00.000Z',
     source: { profile: 'desktop', platform: 'darwin' },
@@ -129,7 +129,7 @@ function makeCtx(profileDir) {
 }
 
 test('buildPlan reports installs, manual steps, inserts, configs, settings, rows, and skills', async () => {
-  const root = await mkdtemp(join(tmpdir(), 'dshsync-plan-'))
+  const root = await mkdtemp(join(tmpdir(), 'dsh-config-transfer-plan-'))
   const profileDir = join(root, 'profile')
   const dshHome = join(root, 'dsh')
   const agentsHome = join(root, 'agents')
@@ -156,13 +156,25 @@ test('buildPlan reports installs, manual steps, inserts, configs, settings, rows
   }
 })
 
+test('accepts the legacy dshsync export format', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'dsh-config-transfer-plan-legacy-'))
+  try {
+    const payload = makePayload()
+    payload.format = 'dshsync'
+    const built = await buildPlan(makeCtx(root), { dshHome: root, agentsHome: root }, payload)
+    assert.ok(built.actions)
+  } finally {
+    await rm(root, { recursive: true, force: true })
+  }
+})
+
 test('buildPlan rejects unknown formats and versions', async () => {
-  const root = await mkdtemp(join(tmpdir(), 'dshsync-plan-'))
+  const root = await mkdtemp(join(tmpdir(), 'dsh-config-transfer-plan-'))
   try {
     const ctx = makeCtx(root)
     await assert.rejects(() => buildPlan(ctx, { dshHome: root, agentsHome: root }, { format: 'other' }), /Unsupported file format/)
     await assert.rejects(
-      () => buildPlan(ctx, { dshHome: root, agentsHome: root }, { format: 'dshsync', version: 99 }),
+      () => buildPlan(ctx, { dshHome: root, agentsHome: root }, { format: 'dsh-config-transfer', version: 99 }),
       /Unsupported file version/,
     )
   } finally {
@@ -171,7 +183,7 @@ test('buildPlan rejects unknown formats and versions', async () => {
 })
 
 test('conditional enablement is not replaced by a boolean toggle', async () => {
-  const root = await mkdtemp(join(tmpdir(), 'dshsync-plan-'))
+  const root = await mkdtemp(join(tmpdir(), 'dsh-config-transfer-plan-'))
   const profileDir = join(root, 'profile')
   await mkdir(profileDir, { recursive: true })
   await writeFile(
@@ -206,7 +218,7 @@ test('conditional enablement is not replaced by a boolean toggle', async () => {
 })
 
 test('an installation-provided bundle is toggled, not reinstalled', async () => {
-  const root = await mkdtemp(join(tmpdir(), 'dshsync-plan-'))
+  const root = await mkdtemp(join(tmpdir(), 'dsh-config-transfer-plan-'))
   const profileDir = join(root, 'profile')
   await mkdir(profileDir, { recursive: true })
   await writeFile(join(profileDir, 'cordis.patch.yml'), '[]\n')
@@ -266,13 +278,13 @@ test('an installation-provided bundle is toggled, not reinstalled', async () => 
 })
 
 test('the sync plugin itself is never installed, toggled, or edited', async () => {
-  const root = await mkdtemp(join(tmpdir(), 'dshsync-plan-'))
+  const root = await mkdtemp(join(tmpdir(), 'dsh-config-transfer-plan-'))
   const profileDir = join(root, 'profile')
   await mkdir(profileDir, { recursive: true })
   await writeFile(join(profileDir, 'cordis.patch.yml'), '[]\n')
   const payload = makePayload()
   payload.profile.bundles = [
-    { name: 'dshsync', version: '1.0.0', official: false, availability: 'profile', enabled: true, installed: true },
+    { name: 'dsh-config-transfer', version: '1.0.0', official: false, availability: 'profile', enabled: true, installed: true },
     { name: 'dsh-config-sync', version: '1.0.0', official: false, availability: 'profile', enabled: true, installed: true },
   ]
   payload.profile.plugins = [
@@ -293,14 +305,14 @@ test('the sync plugin itself is never installed, toggled, or edited', async () =
     assert.equal(built.display.summary.bundlesToEnable, 0)
     assert.equal(built.display.summary.rowsToChange, 0)
     assert.equal(built.display.summary.manual, 0)
-    assert.ok(built.display.warnings.some((warning) => warning.includes('dshsync plugin itself')))
+    assert.ok(built.display.warnings.some((warning) => warning.includes('dsh-config-transfer plugin itself')))
   } finally {
     await rm(root, { recursive: true, force: true })
   }
 })
 
 test('disabled optional on-demand bundles are not installed', async () => {
-  const root = await mkdtemp(join(tmpdir(), 'dshsync-plan-'))
+  const root = await mkdtemp(join(tmpdir(), 'dsh-config-transfer-plan-'))
   const profileDir = join(root, 'profile')
   await mkdir(profileDir, { recursive: true })
   await writeFile(join(profileDir, 'cordis.patch.yml'), '[]\n')
@@ -360,7 +372,7 @@ test('disabled optional on-demand bundles are not installed', async () => {
 })
 
 test('local items already present on this machine are not manual steps', async () => {
-  const root = await mkdtemp(join(tmpdir(), 'dshsync-plan-'))
+  const root = await mkdtemp(join(tmpdir(), 'dsh-config-transfer-plan-'))
   const profileDir = join(root, 'profile')
   await mkdir(profileDir, { recursive: true })
   await writeFile(
@@ -415,7 +427,7 @@ test('local items already present on this machine are not manual steps', async (
 })
 
 test('an existing skill is skipped, not reported as a conflict', async () => {
-  const root = await mkdtemp(join(tmpdir(), 'dshsync-plan-'))
+  const root = await mkdtemp(join(tmpdir(), 'dsh-config-transfer-plan-'))
   const profileDir = join(root, 'profile')
   const dshHome = join(root, 'dsh')
   await mkdir(profileDir, { recursive: true })

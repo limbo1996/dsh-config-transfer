@@ -1,6 +1,6 @@
-# Bundle patch for dshsync.
-# The host half serves the authenticated /api/dshsync routes; the browser half
+# Bundle patch for dsh-config-transfer.
+# The host half serves the authenticated /api/dsh-config-transfer routes; the browser half
 # registers the Config Sync page under Settings.
 - insert:
-    - id: dshsync
+    - id: dsh-config-transfer
       name: dsh-config-transfer

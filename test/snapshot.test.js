@@ -139,7 +139,7 @@ function makeCtx(profileDir) {
 }
 
 test('collectSnapshot exports config, insert rows, settings, bundles, and skills', async () => {
-  const root = await mkdtemp(join(tmpdir(), 'dshsync-snapshot-'))
+  const root = await mkdtemp(join(tmpdir(), 'dsh-config-transfer-snapshot-'))
   const profileDir = join(root, 'profile')
   const dshHome = join(root, 'dsh')
   const agentsHome = join(root, 'agents')
@@ -161,7 +161,7 @@ test('collectSnapshot exports config, insert rows, settings, bundles, and skills
   )
   try {
     const result = await collectSnapshot(makeCtx(profileDir), { dshHome, agentsHome })
-    assert.equal(result.snapshot.format, 'dshsync')
+    assert.equal(result.snapshot.format, 'dsh-config-transfer')
     assert.equal(result.snapshot.profile.configs.length, 1)
     assert.equal(result.snapshot.profile.configs[0].id, 'ui-theme')
     assert.equal(result.snapshot.profile.configs[0].config.apiKey, undefined)

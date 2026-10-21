@@ -78,7 +78,7 @@ function makeCtx(services, routes) {
 }
 
 test('host registers all routes and exports a redacted snapshot', async () => {
-  const root = await mkdtemp(join(tmpdir(), 'dshsync-index-'))
+  const root = await mkdtemp(join(tmpdir(), 'dsh-config-transfer-index-'))
   const profileDir = join(root, 'profile')
   await mkdir(profileDir, { recursive: true })
   await writeFile(join(profileDir, 'cordis.patch.yml'), '[]\n')
@@ -93,15 +93,15 @@ test('host registers all routes and exports a redacted snapshot', async () => {
     apply(makeCtx(services, routes))
     assert.deepEqual(
       [...routes.keys()].sort(),
-      ['/api/dshsync/apply', '/api/dshsync/export', '/api/dshsync/plan', '/api/dshsync/state'],
+      ['/api/dsh-config-transfer/apply', '/api/dsh-config-transfer/export', '/api/dsh-config-transfer/plan', '/api/dsh-config-transfer/state'],
     )
     const response = await routes
-      .get('/api/dshsync/export')
-      .fetch(new Request('http://127.0.0.1/api/dshsync/export'))
+      .get('/api/dsh-config-transfer/export')
+      .fetch(new Request('http://127.0.0.1/api/dsh-config-transfer/export'))
     assert.equal(response.status, 200)
     const body = await response.json()
     assert.equal(body.ok, true)
-    assert.equal(body.snapshot.format, 'dshsync')
+    assert.equal(body.snapshot.format, 'dsh-config-transfer')
     assert.equal(body.snapshot.profile.configs[0].config.apiKey, undefined)
     assert.ok(body.snapshot.profile.configs[0].redacted.length > 0)
   } finally {
@@ -114,7 +114,7 @@ test('host registers all routes and exports a redacted snapshot', async () => {
 })
 
 test('plan route validates malformed input', async () => {
-  const root = await mkdtemp(join(tmpdir(), 'dshsync-index-'))
+  const root = await mkdtemp(join(tmpdir(), 'dsh-config-transfer-index-'))
   const profileDir = join(root, 'profile')
   await mkdir(profileDir, { recursive: true })
   await writeFile(join(profileDir, 'cordis.patch.yml'), '[]\n')
@@ -124,8 +124,8 @@ test('plan route validates malformed input', async () => {
   const routes = new Map()
   try {
     apply(makeCtx(makeServices(profileDir), routes))
-    const response = await routes.get('/api/dshsync/plan').fetch(
-      new Request('http://127.0.0.1/api/dshsync/plan', {
+    const response = await routes.get('/api/dsh-config-transfer/plan').fetch(
+      new Request('http://127.0.0.1/api/dsh-config-transfer/plan', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ format: 'other' }),

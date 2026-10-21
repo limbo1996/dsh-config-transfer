@@ -6,11 +6,13 @@ DSH Desktop 的登录只同步账号，不会同步本机配置。**dsh-config-t
 
 > npm 包名 / GitHub 仓库：`dsh-config-transfer`。
 >
-> 插件内部仍使用 `dshsync` 作为设置命名空间、API 路由和导出格式标记；旧导出文件里的 `dshsync`、`@limbo1996/dshsync`、`dsh-config-sync` 都会被识别为同步插件自身并跳过。
+> 设置命名空间、API 路由、导出格式和 pending 路径全部使用 `dsh-config-transfer`。
+>
+> 为兼容旧文件，导入时仍接受 `format: "dshsync"`，以及旧自身包名 `dshsync`、`@limbo1996/dshsync`、`dsh-config-sync`；新导出一律写 `dsh-config-transfer`。
 >
 > 本插件与 npm 上的 `dsh-config-sync` 不是同一个包，也没有隶属关系。dsh-config-transfer 默认**不导出凭据与 API 密钥**；导入时会保留新电脑上已有的凭据。
 >
-> npm 不允许发布无 scope 的 `dshsync`（与已有包 `dsh-sync` 太相似），所以公开名称使用 `dsh-config-transfer`。
+> npm 上的 `dshsync` 与已有包 `dsh-sync` 太相似，因此公开名称使用 `dsh-config-transfer`。
 
 ## 功能
 
@@ -56,7 +58,7 @@ dsh plugin --profile desktop add /path/to/dsh-config-transfer
 ### 从 tarball 安装
 
 ```bash
-dsh plugin --profile desktop add ./dsh-config-transfer-1.0.1.tgz
+dsh plugin --profile desktop add ./dsh-config-transfer-1.0.2.tgz
 ```
 
 安装后可在 **设置 → 配置同步** 找到本插件。
@@ -115,7 +117,7 @@ DSH 里一个 **bundle（组合包）** 是一个 npm 包，它带一份 `cordis
 dsh-config-transfer 会：
 
 - 读取 `$DSH_HOME` 下的 profile、patch、settings 和用户技能；
-- 写入 `$DSH_HOME/dshsync/pending.json`（权限 600）和用户技能目录；
+- 写入 `$DSH_HOME/dsh-config-transfer/pending.json`（权限 600）和用户技能目录；
 - 通过 Host 已认证的 `/api` 通道与当前页面通信；
 - 从导入文件记录的 npm / Git 来源安装插件。
 
@@ -134,7 +136,7 @@ dsh-config-transfer 会：
 - 第三方插件按文件记录的版本安装；已安装但版本不同的插件不会自动降级或升级，会在计划中提示。
 - `link:`、绝对路径、`file:` 插件无法跨机器安装，计划中会列出手动步骤。
 - 需要构建脚本授权的包不会自动授权，请在 Plugins 页面手动处理。
-- 部分插件在安装后需要重启才会出现 Host 条目；相关配置会进入 `~/.dsh/dshsync/pending.json`，重启后自动应用。
+- 部分插件在安装后需要重启才会出现 Host 条目；相关配置会进入 `~/.dsh/dsh-config-transfer/pending.json`，重启后自动应用。
 - 用户技能不会覆盖新电脑上已有的同名技能。
 - 工作区路径通常与机器绑定，导入时只作为参考信息展示。
 - 插件 bundle 的启用顺序可能因新机器安装顺序不同而略有差异；如果多个 bundle 之间存在覆盖关系，请在 Plugins 页面确认顺序。
@@ -155,11 +157,13 @@ dsh-config-transfer 会：
 
 ## 文件格式
 
-导出文件为 JSON，顶层包含（`format` 保持 `dshsync` 作为兼容标记）：
+导出文件写入 `format: "dsh-config-transfer"`；导入旧文件时仍接受 `format: "dshsync"`。
+
+导出文件为 JSON，顶层包含（`format` 使用 `dsh-config-transfer`）：
 
 ```json
 {
-  "format": "dshsync",
+  "format": "dsh-config-transfer",
   "version": 1,
   "exportedAt": "2026-10-20T10:00:00.000Z",
   "source": { "profile": "desktop", "platform": "darwin", "node": "26.0.0" },
@@ -187,7 +191,7 @@ dsh-config-transfer 会：
 - **插件安装失败**：检查网络、npm registry 和 pnpm；查看导入报告中的安装诊断。
 - **本地插件未恢复**：`link:` / 本地路径插件不会被复制。请在新电脑上重新安装该插件，然后重新导入配置。
 - **导入后页面消失**：如果旧配置停用了 Settings 插件，导入会忠实恢复该状态。可在 Plugins 页面重新启用。
-- **旧导出文件里有 `dshsync`、`@limbo1996/dshsync` 或 `dsh-config-sync`**：dsh-config-transfer 会把它们识别为同步插件自身并跳过，不会安装 npm 上另一个同名包。
+- **旧导出文件里有 `dshsync`、`@limbo1996/dshsync` 或 `dsh-config-sync`**：导入器会把这些旧自身条目识别为自身并跳过；新导出使用 `dsh-config-transfer`。
 
 ## 开发
 

@@ -6,7 +6,7 @@ import { tmpdir } from 'node:os'
 import { applySkills, collectSkills } from '../lib/skills.js'
 
 test('skills round-trip into an empty user root', async () => {
-  const root = await mkdtemp(join(tmpdir(), 'dshsync-skills-'))
+  const root = await mkdtemp(join(tmpdir(), 'dsh-config-transfer-skills-'))
   const source = join(root, 'source')
   const dshHome = join(source, 'dsh')
   const agentsHome = join(source, 'agents')
@@ -32,7 +32,7 @@ test('skills round-trip into an empty user root', async () => {
 })
 
 test('skills are never overwritten', async () => {
-  const root = await mkdtemp(join(tmpdir(), 'dshsync-skills-'))
+  const root = await mkdtemp(join(tmpdir(), 'dsh-config-transfer-skills-'))
   const dshHome = join(root, 'dsh')
   await mkdir(join(dshHome, 'skills', 'keeper'), { recursive: true })
   await writeFile(join(dshHome, 'skills', 'keeper', 'SKILL.md'), '# local\n')
@@ -56,7 +56,7 @@ test('skills are never overwritten', async () => {
 })
 
 test('unsafe skill names and paths are refused', async () => {
-  const root = await mkdtemp(join(tmpdir(), 'dshsync-skills-'))
+  const root = await mkdtemp(join(tmpdir(), 'dsh-config-transfer-skills-'))
   try {
     const report = await applySkills(
       { dshHome: root, agentsHome: join(root, 'agents') },

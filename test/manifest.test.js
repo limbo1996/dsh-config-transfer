@@ -11,7 +11,7 @@ test('package name, bundle patch row, and client module id agree', async () => {
   const patch = await readFile(join(root, 'cordis.patch.yml'), 'utf8')
   const client = await readFile(join(root, 'client.js'), 'utf8')
   assert.equal(manifest.name, 'dsh-config-transfer')
-  assert.match(patch, /^\s*- id: dshsync$/mu)
+  assert.match(patch, /^\s*- id: dsh-config-transfer$/mu)
   assert.match(patch, /^\s+name: dsh-config-transfer$/mu)
   assert.match(client, /id: 'dsh-config-transfer'/u)
   assert.equal(manifest.dsh.bundle.patch, './cordis.patch.yml')

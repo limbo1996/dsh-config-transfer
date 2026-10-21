@@ -163,46 +163,46 @@ window.__ModuleLoader__.load({
     }
 
     const CSS = `
-      .dshsync-page { max-width: 780px; padding: 2px 0 48px; color: var(--dsw-alias-label-primary); }
-      .dshsync-title { margin: 0 0 6px; font-size: 20px; font-weight: 600; letter-spacing: -0.01em; }
-      .dshsync-subtitle { margin: 0 0 20px; font-size: 13px; line-height: 1.65; color: var(--dsw-alias-label-secondary); }
-      .dshsync-card { margin: 0 0 14px; padding: 16px; border: 1px solid var(--dsw-alias-border-l1); border-radius: 12px; background: var(--dsw-alias-bg-layer-1); }
-      .dshsync-card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
-      .dshsync-card-title { margin: 0 0 4px; font-size: 15px; font-weight: 600; }
-      .dshsync-card-text { margin: 0; font-size: 13px; line-height: 1.6; color: var(--dsw-alias-label-secondary); }
-      .dshsync-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 14px; }
-      .dshsync-button { display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 32px; padding: 0 14px; border-radius: 8px; border: 1px solid var(--dsw-alias-border-l2); background: var(--dsw-alias-bg-layer-2); color: var(--dsw-alias-label-primary); font: inherit; font-size: 13px; cursor: pointer; white-space: nowrap; }
-      .dshsync-button:hover:not(:disabled) { border-color: var(--dsw-alias-brand-primary); }
-      .dshsync-button:focus-visible { outline: 2px solid var(--dsw-alias-brand-primary); outline-offset: 1px; }
-      .dshsync-button:disabled { opacity: 0.5; cursor: not-allowed; }
-      .dshsync-button-primary { border-color: var(--dsw-alias-brand-primary); color: var(--dsw-alias-brand-primary); background: var(--dsw-alias-bg-layer-1); }
-      .dshsync-button-primary:hover:not(:disabled) { background: var(--dsw-alias-bg-layer-2); }
-      .dshsync-button-danger { border-color: var(--dsw-alias-state-error-primary); color: var(--dsw-alias-state-error-primary); }
-      .dshsync-file { display: none; }
-      .dshsync-note { margin: 10px 0 0; font-size: 12px; line-height: 1.6; color: var(--dsw-alias-label-secondary); }
-      .dshsync-error { margin: 10px 0 0; font-size: 12px; line-height: 1.6; color: var(--dsw-alias-state-error-primary); overflow-wrap: anywhere; }
-      .dshsync-success { margin: 10px 0 0; font-size: 12px; line-height: 1.6; color: var(--dsw-alias-state-success-primary); }
-      .dshsync-warn { margin: 10px 0 0; font-size: 12px; line-height: 1.6; color: var(--dsw-alias-state-warn-primary); }
-      .dshsync-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(112px, 1fr)); gap: 8px; margin-top: 14px; }
-      .dshsync-stat { padding: 8px 10px; border-radius: 8px; background: var(--dsw-alias-bg-layer-2); }
-      .dshsync-stat-value { font-size: 18px; font-weight: 600; font-variant-numeric: tabular-nums; }
-      .dshsync-stat-label { margin-top: 2px; font-size: 11px; color: var(--dsw-alias-label-secondary); }
-      .dshsync-details { margin-top: 10px; padding: 10px 12px; border-radius: 8px; background: var(--dsw-alias-bg-layer-2); font-size: 12px; line-height: 1.6; }
-      .dshsync-details > summary { cursor: pointer; color: var(--dsw-alias-label-secondary); }
-      .dshsync-list { margin: 8px 0 0; padding: 0; list-style: none; }
-      .dshsync-list li { padding: 3px 0; overflow-wrap: anywhere; }
-      .dshsync-list code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; }
-      .dshsync-progress { height: 6px; margin-top: 14px; overflow: hidden; border-radius: 999px; background: var(--dsw-alias-bg-layer-2); }
-      .dshsync-progress-fill { height: 100%; border-radius: 999px; background: var(--dsw-alias-brand-primary); transition: width 0.25s ease; }
-      .dshsync-status { display: flex; align-items: center; gap: 8px; margin-top: 12px; font-size: 13px; }
-      .dshsync-spinner { width: 14px; height: 14px; flex: none; border: 2px solid var(--dsw-alias-border-l2); border-top-color: var(--dsw-alias-brand-primary); border-radius: 50%; animation: dshsync-spin 0.8s linear infinite; }
-      @keyframes dshsync-spin { to { transform: rotate(360deg); } }
-      .dshsync-banner { margin-top: 12px; padding: 10px 12px; border-radius: 8px; font-size: 12px; line-height: 1.6; }
-      .dshsync-banner-warn { background: var(--dsw-alias-bg-layer-2); border: 1px solid var(--dsw-alias-state-warn-primary); color: var(--dsw-alias-label-primary); }
-      .dshsync-banner-error { background: var(--dsw-alias-bg-layer-2); border: 1px solid var(--dsw-alias-state-error-primary); color: var(--dsw-alias-label-primary); }
-      .dshsync-banner-success { background: var(--dsw-alias-bg-layer-2); border: 1px solid var(--dsw-alias-state-success-primary); color: var(--dsw-alias-label-primary); }
-      .dshsync-muted { color: var(--dsw-alias-label-secondary); }
-      .dshsync-inline { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; margin-top: 10px; font-size: 12px; color: var(--dsw-alias-label-secondary); overflow-wrap: anywhere; }
+      .dsh-config-transfer-page { max-width: 780px; padding: 2px 0 48px; color: var(--dsw-alias-label-primary); }
+      .dsh-config-transfer-title { margin: 0 0 6px; font-size: 20px; font-weight: 600; letter-spacing: -0.01em; }
+      .dsh-config-transfer-subtitle { margin: 0 0 20px; font-size: 13px; line-height: 1.65; color: var(--dsw-alias-label-secondary); }
+      .dsh-config-transfer-card { margin: 0 0 14px; padding: 16px; border: 1px solid var(--dsw-alias-border-l1); border-radius: 12px; background: var(--dsw-alias-bg-layer-1); }
+      .dsh-config-transfer-card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+      .dsh-config-transfer-card-title { margin: 0 0 4px; font-size: 15px; font-weight: 600; }
+      .dsh-config-transfer-card-text { margin: 0; font-size: 13px; line-height: 1.6; color: var(--dsw-alias-label-secondary); }
+      .dsh-config-transfer-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 14px; }
+      .dsh-config-transfer-button { display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 32px; padding: 0 14px; border-radius: 8px; border: 1px solid var(--dsw-alias-border-l2); background: var(--dsw-alias-bg-layer-2); color: var(--dsw-alias-label-primary); font: inherit; font-size: 13px; cursor: pointer; white-space: nowrap; }
+      .dsh-config-transfer-button:hover:not(:disabled) { border-color: var(--dsw-alias-brand-primary); }
+      .dsh-config-transfer-button:focus-visible { outline: 2px solid var(--dsw-alias-brand-primary); outline-offset: 1px; }
+      .dsh-config-transfer-button:disabled { opacity: 0.5; cursor: not-allowed; }
+      .dsh-config-transfer-button-primary { border-color: var(--dsw-alias-brand-primary); color: var(--dsw-alias-brand-primary); background: var(--dsw-alias-bg-layer-1); }
+      .dsh-config-transfer-button-primary:hover:not(:disabled) { background: var(--dsw-alias-bg-layer-2); }
+      .dsh-config-transfer-button-danger { border-color: var(--dsw-alias-state-error-primary); color: var(--dsw-alias-state-error-primary); }
+      .dsh-config-transfer-file { display: none; }
+      .dsh-config-transfer-note { margin: 10px 0 0; font-size: 12px; line-height: 1.6; color: var(--dsw-alias-label-secondary); }
+      .dsh-config-transfer-error { margin: 10px 0 0; font-size: 12px; line-height: 1.6; color: var(--dsw-alias-state-error-primary); overflow-wrap: anywhere; }
+      .dsh-config-transfer-success { margin: 10px 0 0; font-size: 12px; line-height: 1.6; color: var(--dsw-alias-state-success-primary); }
+      .dsh-config-transfer-warn { margin: 10px 0 0; font-size: 12px; line-height: 1.6; color: var(--dsw-alias-state-warn-primary); }
+      .dsh-config-transfer-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(112px, 1fr)); gap: 8px; margin-top: 14px; }
+      .dsh-config-transfer-stat { padding: 8px 10px; border-radius: 8px; background: var(--dsw-alias-bg-layer-2); }
+      .dsh-config-transfer-stat-value { font-size: 18px; font-weight: 600; font-variant-numeric: tabular-nums; }
+      .dsh-config-transfer-stat-label { margin-top: 2px; font-size: 11px; color: var(--dsw-alias-label-secondary); }
+      .dsh-config-transfer-details { margin-top: 10px; padding: 10px 12px; border-radius: 8px; background: var(--dsw-alias-bg-layer-2); font-size: 12px; line-height: 1.6; }
+      .dsh-config-transfer-details > summary { cursor: pointer; color: var(--dsw-alias-label-secondary); }
+      .dsh-config-transfer-list { margin: 8px 0 0; padding: 0; list-style: none; }
+      .dsh-config-transfer-list li { padding: 3px 0; overflow-wrap: anywhere; }
+      .dsh-config-transfer-list code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; }
+      .dsh-config-transfer-progress { height: 6px; margin-top: 14px; overflow: hidden; border-radius: 999px; background: var(--dsw-alias-bg-layer-2); }
+      .dsh-config-transfer-progress-fill { height: 100%; border-radius: 999px; background: var(--dsw-alias-brand-primary); transition: width 0.25s ease; }
+      .dsh-config-transfer-status { display: flex; align-items: center; gap: 8px; margin-top: 12px; font-size: 13px; }
+      .dsh-config-transfer-spinner { width: 14px; height: 14px; flex: none; border: 2px solid var(--dsw-alias-border-l2); border-top-color: var(--dsw-alias-brand-primary); border-radius: 50%; animation: dsh-config-transfer-spin 0.8s linear infinite; }
+      @keyframes dsh-config-transfer-spin { to { transform: rotate(360deg); } }
+      .dsh-config-transfer-banner { margin-top: 12px; padding: 10px 12px; border-radius: 8px; font-size: 12px; line-height: 1.6; }
+      .dsh-config-transfer-banner-warn { background: var(--dsw-alias-bg-layer-2); border: 1px solid var(--dsw-alias-state-warn-primary); color: var(--dsw-alias-label-primary); }
+      .dsh-config-transfer-banner-error { background: var(--dsw-alias-bg-layer-2); border: 1px solid var(--dsw-alias-state-error-primary); color: var(--dsw-alias-label-primary); }
+      .dsh-config-transfer-banner-success { background: var(--dsw-alias-bg-layer-2); border: 1px solid var(--dsw-alias-state-success-primary); color: var(--dsw-alias-label-primary); }
+      .dsh-config-transfer-muted { color: var(--dsw-alias-label-secondary); }
+      .dsh-config-transfer-inline { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; margin-top: 10px; font-size: 12px; color: var(--dsw-alias-label-secondary); overflow-wrap: anywhere; }
     `
 
     const PAGE_SIZE_LIMIT = 32 * 1024 * 1024
@@ -256,9 +256,9 @@ window.__ModuleLoader__.load({
     function Stat(props) {
       return h(
         'div',
-        { className: 'dshsync-stat' },
-        h('div', { className: 'dshsync-stat-value' }, String(props.value)),
-        h('div', { className: 'dshsync-stat-label' }, props.label),
+        { className: 'dsh-config-transfer-stat' },
+        h('div', { className: 'dsh-config-transfer-stat-value' }, String(props.value)),
+        h('div', { className: 'dsh-config-transfer-stat-label' }, props.label),
       )
     }
 
@@ -267,7 +267,7 @@ window.__ModuleLoader__.load({
       if (entries.length === 0) return null
       return h(
         'div',
-        { className: 'dshsync-stats' },
+        { className: 'dsh-config-transfer-stats' },
         entries.map((item, index) =>
           h(Stat, { key: `${item.label}-${index}`, value: item.value, label: item.label }),
         ),
@@ -279,11 +279,11 @@ window.__ModuleLoader__.load({
       if (items.length === 0) return null
       return h(
         'details',
-        { className: 'dshsync-details', open: props.open === true },
+        { className: 'dsh-config-transfer-details', open: props.open === true },
         h('summary', null, `${props.title} (${items.length})`),
         h(
           'ul',
-          { className: 'dshsync-list' },
+          { className: 'dsh-config-transfer-list' },
           items.map((item, index) =>
             h(
               'li',
@@ -317,11 +317,11 @@ window.__ModuleLoader__.load({
         (summary.pendingConfigs || 0) + (summary.pendingSettings || 0) + (summary.pendingRows || 0)
       return h(
         'div',
-        { className: 'dshsync-card' },
-        h('div', { className: 'dshsync-card-title' }, t('planTitle')),
+        { className: 'dsh-config-transfer-card' },
+        h('div', { className: 'dsh-config-transfer-card-title' }, t('planTitle')),
         h(
           'div',
-          { className: 'dshsync-card-text' },
+          { className: 'dsh-config-transfer-card-text' },
           t('planSummary'),
         ),
         h(StatGrid, {
@@ -338,18 +338,18 @@ window.__ModuleLoader__.load({
           ],
         }),
         pendingTotal > 0
-          ? h('p', { className: 'dshsync-note' }, t('planPendingHint', { count: pendingTotal }))
+          ? h('p', { className: 'dsh-config-transfer-note' }, t('planPendingHint', { count: pendingTotal }))
           : null,
         (summary.builtinBundles || 0) > 0
-          ? h('p', { className: 'dshsync-note' }, t('planBuiltinNote', { count: summary.builtinBundles }))
+          ? h('p', { className: 'dsh-config-transfer-note' }, t('planBuiltinNote', { count: summary.builtinBundles }))
           : null,
         (summary.skillsSkipped || 0) > 0
-          ? h('p', { className: 'dshsync-note' }, t('skillsSkippedNote', { count: summary.skillsSkipped }))
+          ? h('p', { className: 'dsh-config-transfer-note' }, t('skillsSkippedNote', { count: summary.skillsSkipped }))
           : null,
         plan.source && (plan.source.profile || plan.source.platform)
           ? h(
               'div',
-              { className: 'dshsync-inline' },
+              { className: 'dsh-config-transfer-inline' },
               t('planSource', {
                 profile: plan.source.profile || '—',
                 platform: plan.source.platform || '—',
@@ -401,12 +401,12 @@ window.__ModuleLoader__.load({
         h(DetailList, { title: t('warningsTitle'), items: plan.warnings || [] }),
         h(
           'div',
-          { className: 'dshsync-actions' },
+          { className: 'dsh-config-transfer-actions' },
           h(
             'button',
             {
               type: 'button',
-              className: 'dshsync-button dshsync-button-primary',
+              className: 'dsh-config-transfer-button dsh-config-transfer-button-primary',
               onClick: props.onConfirm,
               disabled: props.busy,
             },
@@ -416,14 +416,14 @@ window.__ModuleLoader__.load({
             'button',
             {
               type: 'button',
-              className: 'dshsync-button',
+              className: 'dsh-config-transfer-button',
               onClick: props.onCancel,
               disabled: props.busy,
             },
             t('cancel'),
           ),
         ),
-        h('p', { className: 'dshsync-note' }, t('confirmHint')),
+        h('p', { className: 'dsh-config-transfer-note' }, t('confirmHint')),
       )
     }
 
@@ -436,28 +436,28 @@ window.__ModuleLoader__.load({
       const failed = state.phase === 'error'
       return h(
         'div',
-        { className: 'dshsync-card' },
+        { className: 'dsh-config-transfer-card' },
         h(
           'div',
-          { className: 'dshsync-card-head' },
-          h('div', null, h('div', { className: 'dshsync-card-title' }, done ? t('importDone') : failed ? t('importFailed') : t('applyingTitle'))),
+          { className: 'dsh-config-transfer-card-head' },
+          h('div', null, h('div', { className: 'dsh-config-transfer-card-title' }, done ? t('importDone') : failed ? t('importFailed') : t('applyingTitle'))),
         ),
         h(
           'div',
-          { className: 'dshsync-status' },
-          !done && !failed ? h('span', { className: 'dshsync-spinner', 'aria-hidden': true }) : null,
+          { className: 'dsh-config-transfer-status' },
+          !done && !failed ? h('span', { className: 'dsh-config-transfer-spinner', 'aria-hidden': true }) : null,
           h('span', null, state.message || (done ? t('importDone') : t('busy'))),
-          total > 0 && !done && !failed ? h('span', { className: 'dshsync-muted' }, t('progress', { step, total })) : null,
+          total > 0 && !done && !failed ? h('span', { className: 'dsh-config-transfer-muted' }, t('progress', { step, total })) : null,
         ),
         !done && !failed
           ? h(
               'div',
-              { className: 'dshsync-progress', role: 'progressbar', 'aria-valuenow': percent, 'aria-valuemin': 0, 'aria-valuemax': 100 },
-              h('div', { className: 'dshsync-progress-fill', style: { width: `${percent}%` } }),
+              { className: 'dsh-config-transfer-progress', role: 'progressbar', 'aria-valuenow': percent, 'aria-valuemin': 0, 'aria-valuemax': 100 },
+              h('div', { className: 'dsh-config-transfer-progress-fill', style: { width: `${percent}%` } }),
             )
           : null,
-        !done && !failed ? h('p', { className: 'dshsync-note' }, t('applyingHint')) : null,
-        failed && state.error ? h('p', { className: 'dshsync-error' }, state.error) : null,
+        !done && !failed ? h('p', { className: 'dsh-config-transfer-note' }, t('applyingHint')) : null,
+        failed && state.error ? h('p', { className: 'dsh-config-transfer-error' }, state.error) : null,
       )
     }
 
@@ -471,19 +471,19 @@ window.__ModuleLoader__.load({
       if (report.restartRequired) {
         banner = h(
           'div',
-          { className: 'dshsync-banner dshsync-banner-warn' },
+          { className: 'dsh-config-transfer-banner dsh-config-transfer-banner-warn' },
           h('strong', null, t('reportRestart')),
           h('div', null, t('restartHint')),
         )
       } else if (hasIssues) {
-        banner = h('div', { className: 'dshsync-banner dshsync-banner-error' }, t('importIssues'))
+        banner = h('div', { className: 'dsh-config-transfer-banner dsh-config-transfer-banner-error' }, t('importIssues'))
       } else {
-        banner = h('div', { className: 'dshsync-banner dshsync-banner-success' }, t('importDone'))
+        banner = h('div', { className: 'dsh-config-transfer-banner dsh-config-transfer-banner-success' }, t('importDone'))
       }
       return h(
         'div',
-        { className: 'dshsync-card' },
-        h('div', { className: 'dshsync-card-title' }, t('importDone')),
+        { className: 'dsh-config-transfer-card' },
+        h('div', { className: 'dsh-config-transfer-card-title' }, t('importDone')),
         h(StatGrid, {
           items: [
             { label: t('reportInstalled'), value: (report.installed || []).length },
@@ -556,12 +556,12 @@ window.__ModuleLoader__.load({
         h(DetailList, { title: t('reportWarnings'), items: report.warnings || [] }),
         h(
           'div',
-          { className: 'dshsync-actions' },
+          { className: 'dsh-config-transfer-actions' },
           h(
             'button',
             {
               type: 'button',
-              className: 'dshsync-button dshsync-button-primary',
+              className: 'dsh-config-transfer-button dsh-config-transfer-button-primary',
               onClick: props.onReset,
             },
             t('anotherFile'),
@@ -605,7 +605,7 @@ window.__ModuleLoader__.load({
           if (pollInFlight.current) return
           pollInFlight.current = true
           try {
-            const data = await requestJson('/api/dshsync/state')
+            const data = await requestJson('/api/dsh-config-transfer/state')
             pollFailures.current = 0
             applyState(data?.state)
             if (data?.state?.phase === 'done' || data?.state?.phase === 'error') {
@@ -627,7 +627,7 @@ window.__ModuleLoader__.load({
 
       React.useEffect(() => {
         let mounted = true
-        requestJson('/api/dshsync/state')
+        requestJson('/api/dsh-config-transfer/state')
           .then((data) => {
             if (!mounted) return
             applyState(data?.state)
@@ -645,7 +645,7 @@ window.__ModuleLoader__.load({
         setError(null)
         setExportStats(null)
         try {
-          const data = await requestJson('/api/dshsync/export')
+          const data = await requestJson('/api/dsh-config-transfer/export')
           downloadJson(timestampName(), JSON.stringify(data.snapshot, null, 2))
           setExportStats(data.stats)
         } catch (exportError) {
@@ -672,7 +672,7 @@ window.__ModuleLoader__.load({
             setError(t('invalidJson'))
             return
           }
-          const data = await requestJson('/api/dshsync/plan', {
+          const data = await requestJson('/api/dsh-config-transfer/plan', {
             method: 'POST',
             headers: { 'content-type': 'application/json' },
             body: text,
@@ -697,7 +697,7 @@ window.__ModuleLoader__.load({
         setBusy('applying')
         setError(null)
         try {
-          await requestJson('/api/dshsync/apply', {
+          await requestJson('/api/dsh-config-transfer/apply', {
             method: 'POST',
             headers: { 'content-type': 'application/json' },
             body: file.text,
@@ -724,31 +724,31 @@ window.__ModuleLoader__.load({
 
       return h(
         'div',
-        { className: 'dshsync-page' },
+        { className: 'dsh-config-transfer-page' },
         h('style', null, CSS),
-        h('h2', { className: 'dshsync-title' }, t('pageTitle')),
-        h('p', { className: 'dshsync-subtitle' }, t('pageDescription')),
-        error !== null ? h('div', { className: 'dshsync-banner dshsync-banner-error' }, error) : null,
+        h('h2', { className: 'dsh-config-transfer-title' }, t('pageTitle')),
+        h('p', { className: 'dsh-config-transfer-subtitle' }, t('pageDescription')),
+        error !== null ? h('div', { className: 'dsh-config-transfer-banner dsh-config-transfer-banner-error' }, error) : null,
         h(
           'div',
-          { className: 'dshsync-card' },
-          h('div', { className: 'dshsync-card-title' }, t('exportTitle')),
-          h('p', { className: 'dshsync-card-text' }, t('exportDescription')),
+          { className: 'dsh-config-transfer-card' },
+          h('div', { className: 'dsh-config-transfer-card-title' }, t('exportTitle')),
+          h('p', { className: 'dsh-config-transfer-card-text' }, t('exportDescription')),
           h(
             'div',
-            { className: 'dshsync-actions' },
+            { className: 'dsh-config-transfer-actions' },
             h(
               'button',
               {
                 type: 'button',
-                className: 'dshsync-button dshsync-button-primary',
+                className: 'dsh-config-transfer-button dsh-config-transfer-button-primary',
                 onClick: () => void onExport(),
                 disabled: busy !== null || running,
               },
               busy === 'export' ? t('exporting') : t('exportButton'),
             ),
             exportStats
-              ? h('span', { className: 'dshsync-success' }, t('exportDone'))
+              ? h('span', { className: 'dsh-config-transfer-success' }, t('exportDone'))
               : null,
           ),
           exportStats
@@ -769,12 +769,12 @@ window.__ModuleLoader__.load({
         ),
         h(
           'div',
-          { className: 'dshsync-card' },
-          h('div', { className: 'dshsync-card-title' }, t('importTitle')),
-          h('p', { className: 'dshsync-card-text' }, t('importDescription')),
+          { className: 'dsh-config-transfer-card' },
+          h('div', { className: 'dsh-config-transfer-card-title' }, t('importTitle')),
+          h('p', { className: 'dsh-config-transfer-card-text' }, t('importDescription')),
           h('input', {
             ref: fileRef,
-            className: 'dshsync-file',
+            className: 'dsh-config-transfer-file',
             type: 'file',
             accept: '.json,application/json',
             onChange: onFileChosen,
@@ -783,18 +783,18 @@ window.__ModuleLoader__.load({
           }),
           h(
             'div',
-            { className: 'dshsync-actions' },
+            { className: 'dsh-config-transfer-actions' },
             h(
               'button',
               {
                 type: 'button',
-                className: 'dshsync-button',
+                className: 'dsh-config-transfer-button',
                 onClick: () => fileRef.current && fileRef.current.click(),
                 disabled: busy !== null || running,
               },
               busy === 'planning' ? t('busy') : t('importButton'),
             ),
-            file ? h('span', { className: 'dshsync-muted' }, file.name) : null,
+            file ? h('span', { className: 'dsh-config-transfer-muted' }, file.name) : null,
           ),
         ),
         plan !== null ? h(PlanView, { plan, t, busy: running, onConfirm, onCancel: reset }) : null,
@@ -805,8 +805,8 @@ window.__ModuleLoader__.load({
         state && state.pending && state.pending.total > 0
           ? h(
               'div',
-              { className: 'dshsync-card' },
-              h('div', { className: 'dshsync-card-title' }, t('pendingTitle')),
+              { className: 'dsh-config-transfer-card' },
+              h('div', { className: 'dsh-config-transfer-card-title' }, t('pendingTitle')),
               h(StatGrid, {
                 items: [
                   { label: t('insertsToWrite'), value: state.pending.inserts },
@@ -815,7 +815,7 @@ window.__ModuleLoader__.load({
                   { label: t('rowsToChange'), value: state.pending.rows },
                 ],
               }),
-              h('p', { className: 'dshsync-note' }, t('restartHint')),
+              h('p', { className: 'dsh-config-transfer-note' }, t('restartHint')),
             )
           : null,
       )
@@ -825,29 +825,29 @@ window.__ModuleLoader__.load({
       inject: ['slots', 'locale'],
       apply(ctx) {
         ctx.effect(
-          () => ctx.locale.register('dshsync', 'en', EN),
-          'dshsync: English dictionary',
+          () => ctx.locale.register('dsh-config-transfer', 'en', EN),
+          'dsh-config-transfer: English dictionary',
         )
         ctx.effect(
-          () => ctx.locale.register('dshsync', 'zh', ZH),
-          'dshsync: Chinese dictionary',
+          () => ctx.locale.register('dsh-config-transfer', 'zh', ZH),
+          'dsh-config-transfer: Chinese dictionary',
         )
-        const translate = ctx.locale.bind('dshsync')
+        const translate = ctx.locale.bind('dsh-config-transfer')
         ctx.effect(
           () =>
             ctx.slots.inject('settings.section', () =>
               ctx.slots.register(
                 {
                   name: 'settings.section',
-                  id: 'dshsync',
+                  id: 'dsh-config-transfer',
                   order: 35,
                   label: () => translate('sectionLabel'),
-                  locale: 'dshsync',
+                  locale: 'dsh-config-transfer',
                 },
                 ConfigSyncPage,
               ),
             ),
-          'dshsync: settings section',
+          'dsh-config-transfer: settings section',
         )
       },
     }
