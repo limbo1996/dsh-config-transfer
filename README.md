@@ -1,14 +1,16 @@
-# dshsync
+# dsh-config-transfer
 
-为 DeepSeek Harness Desktop（DSH Desktop）提供的配置迁移插件。
+为 DeepSeek Harness Desktop（DSH Desktop）提供的配置迁移插件。设置页中显示为 **配置同步**。
 
-DSH Desktop 的登录只同步账号，不会同步本机配置。**dshsync** 在旧电脑上导出配置，在新电脑上导入，从而恢复插件、插件设置、MCP 条目和用户技能。
+DSH Desktop 的登录只同步账号，不会同步本机配置。**dsh-config-transfer** 在旧电脑上导出配置，在新电脑上导入，从而恢复插件、插件设置、MCP 条目和用户技能。
 
-> npm 包名：`dsh-config-transfer`，与 GitHub 仓库同名。
+> npm 包名 / GitHub 仓库：`dsh-config-transfer`。
 >
-> 本插件与 npm 上的 `dsh-config-sync` 不是同一个包，也没有隶属关系。dshsync 默认**不导出凭据与 API 密钥**；导入时会保留新电脑上已有的凭据。
+> 插件内部仍使用 `dshsync` 作为设置命名空间、API 路由和导出格式标记；旧导出文件里的 `dshsync`、`@limbo1996/dshsync`、`dsh-config-sync` 都会被识别为同步插件自身并跳过。
 >
-> npm 不允许发布无 scope 的 `dshsync`（与已有包 `dsh-sync` 太相似），所以使用 `dsh-config-transfer`。
+> 本插件与 npm 上的 `dsh-config-sync` 不是同一个包，也没有隶属关系。dsh-config-transfer 默认**不导出凭据与 API 密钥**；导入时会保留新电脑上已有的凭据。
+>
+> npm 不允许发布无 scope 的 `dshsync`（与已有包 `dsh-sync` 太相似），所以公开名称使用 `dsh-config-transfer`。
 
 ## 功能
 
@@ -25,7 +27,7 @@ DSH Desktop 的登录只同步账号，不会同步本机配置。**dshsync** �
 - 通过 `insert` 行恢复 MCP 服务器等自定义插件条目；
 - 恢复用户技能（`~/.dsh/skills` 与 `~/.agents/skills`）；
 - 对暂时无法应用的配置排队，重启后自动继续应用；
-- 永远不会安装、停用或改写 dshsync 自身（包括旧导出文件中的 `dsh-config-sync` 自身条目）。
+- 永远不会安装、停用或改写 dsh-config-transfer 自身（包括旧导出文件中的 `dsh-config-sync` 自身条目）。
 
 ## 安装
 
@@ -54,7 +56,7 @@ dsh plugin --profile desktop add /path/to/dsh-config-transfer
 ### 从 tarball 安装
 
 ```bash
-dsh plugin --profile desktop add ./dsh-config-transfer-1.0.0.tgz
+dsh plugin --profile desktop add ./dsh-config-transfer-1.0.1.tgz
 ```
 
 安装后可在 **设置 → 配置同步** 找到本插件。
@@ -63,14 +65,14 @@ dsh plugin --profile desktop add ./dsh-config-transfer-1.0.0.tgz
 
 ### 旧电脑
 
-1. 安装并启用 dshsync。
+1. 安装并启用 dsh-config-transfer。
 2. 打开 **设置 → 配置同步**。
-3. 点击 **保存到文件**，得到 `dshsync-YYYYMMDD-HHmm.json`。
+3. 点击 **保存到文件**，得到 `dsh-config-transfer-YYYYMMDD-HHmm.json`。
 
 ### 新电脑
 
 1. 下载并登录 DSH Desktop。
-2. 安装并启用 dshsync。
+2. 安装并启用 dsh-config-transfer。
 3. 打开 **设置 → 配置同步**。
 4. 点击 **选择文件…**，选中旧电脑导出的 JSON。
 5. 检查“确认导入”页面中的安装、配置和手动步骤。
@@ -83,8 +85,8 @@ DSH 里一个 **bundle（组合包）** 是一个 npm 包，它带一份 `cordis
 
 同步时会区分两类 bundle：
 
-- **第三方 / 额外安装的 bundle**：从 npm、Git、tarball 或本地路径安装进 profile 的插件包。dshsync 会记录它们的安装 spec、版本和启用状态，在新电脑上重新安装。
-- **DSH 自带的 bundle**：随 DSH 安装包提供（`availability: "installation"`），例如 `@deepseek-ai/dsh-base`、`@deepseek-ai/dsh-web-app`，以及官方可选插件。dshsync 不会重复安装它们，只恢复启用状态。
+- **第三方 / 额外安装的 bundle**：从 npm、Git、tarball 或本地路径安装进 profile 的插件包。dsh-config-transfer 会记录它们的安装 spec、版本和启用状态，在新电脑上重新安装。
+- **DSH 自带的 bundle**：随 DSH 安装包提供（`availability: "installation"`），例如 `@deepseek-ai/dsh-base`、`@deepseek-ai/dsh-web-app`，以及官方可选插件。dsh-config-transfer 不会重复安装它们，只恢复启用状态。
 
 保存页会分别显示 **第三方插件** 和 **DSH 自带** 的数量；导入计划会说明有多少 DSH 自带 bundle 已存在、不会被重复安装。
 
@@ -110,7 +112,7 @@ DSH 里一个 **bundle（组合包）** 是一个 npm 包，它带一份 `cordis
 
 ## 安全与权限
 
-dshsync 会：
+dsh-config-transfer 会：
 
 - 读取 `$DSH_HOME` 下的 profile、patch、settings 和用户技能；
 - 写入 `$DSH_HOME/dshsync/pending.json`（权限 600）和用户技能目录；
@@ -153,7 +155,7 @@ dshsync 会：
 
 ## 文件格式
 
-导出文件为 JSON，顶层包含：
+导出文件为 JSON，顶层包含（`format` 保持 `dshsync` 作为兼容标记）：
 
 ```json
 {
@@ -185,7 +187,7 @@ dshsync 会：
 - **插件安装失败**：检查网络、npm registry 和 pnpm；查看导入报告中的安装诊断。
 - **本地插件未恢复**：`link:` / 本地路径插件不会被复制。请在新电脑上重新安装该插件，然后重新导入配置。
 - **导入后页面消失**：如果旧配置停用了 Settings 插件，导入会忠实恢复该状态。可在 Plugins 页面重新启用。
-- **旧导出文件里有 `dshsync`、`@limbo1996/dshsync` 或 `dsh-config-sync`**：dshsync 会把它们识别为同步插件自身并跳过，不会安装 npm 上另一个同名包。
+- **旧导出文件里有 `dshsync`、`@limbo1996/dshsync` 或 `dsh-config-sync`**：dsh-config-transfer 会把它们识别为同步插件自身并跳过，不会安装 npm 上另一个同名包。
 
 ## 开发
 

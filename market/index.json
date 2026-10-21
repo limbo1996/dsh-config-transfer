@@ -38,11 +38,11 @@
         ]
       },
       "dist-tags": {
-        "latest": "1.0.0"
+        "latest": "1.0.1"
       },
       "versions": [
         {
-          "version": "1.0.0",
+          "version": "1.0.1",
           "publishTimestamp": 1792566346,
           "source": {
             "type": "npm"

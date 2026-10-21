@@ -243,7 +243,7 @@ window.__ModuleLoader__.load({
     function timestampName() {
       const now = new Date()
       const pad = (value) => String(value).padStart(2, '0')
-      return `dshsync-${now.getFullYear()}${pad(now.getMonth() + 1)}${pad(now.getDate())}-${pad(now.getHours())}${pad(now.getMinutes())}.json`
+      return `dsh-config-transfer-${now.getFullYear()}${pad(now.getMonth() + 1)}${pad(now.getDate())}-${pad(now.getHours())}${pad(now.getMinutes())}.json`
     }
 
     function formatDate(value) {

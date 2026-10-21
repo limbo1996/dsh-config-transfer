@@ -1,6 +1,6 @@
-# Publishing dshsync
+# Publishing dsh-config-transfer
 
-This file is the release checklist for publishing **dshsync** to npm and listing it in DSH plugin markets.
+This file is the release checklist for publishing **dsh-config-transfer** to npm and listing it in DSH plugin markets.
 
 ## 0. Name and accounts
 
